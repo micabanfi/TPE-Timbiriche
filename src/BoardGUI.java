@@ -1,4 +1,5 @@
 public class BoardGUI {
+	
     public static int[][] board;
     public static int n;
 
