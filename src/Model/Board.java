@@ -64,9 +64,10 @@ public class Board {
             }
             if(i!=n-1){
                 if(this.hEdges[i+1][j]==1){
-                    if(this.vEdges[i][j]==1 && this.vEdges[i][j+1]==1)
-                        this.boxes[i][j]=player.getPlayerNumber();
-                         player.setScore();//aumnto el score del player en 1;
+                    if(this.vEdges[i][j]==1 && this.vEdges[i][j+1]==1) {
+                        this.boxes[i][j] = player.getPlayerNumber();
+                        player.setScore();//aumnto el score del player en 1;
+                    }
 
                 }
             }
@@ -84,10 +85,10 @@ public class Board {
             }
             if(j!=n-1){//chequeo el cuadrado formado a la derecha de mi linea vertical
                 if(this.vEdges[i][j+1]==1){
-                    if(this.hEdges[i][j]==1 && this.hEdges[i+1][j]==1)
-                        this.boxes[i][j]=player.getPlayerNumber();
+                    if(this.hEdges[i][j]==1 && this.hEdges[i+1][j]==1) {
+                        this.boxes[i][j] = player.getPlayerNumber();
                         player.setScore();//aumnto el score del player en 1;
-
+                    }
                 }
             }
         }

@@ -13,9 +13,9 @@ public class TesterBoards {
         Player p1=new Player(true,1);
         Player p2=new Player(true,2);
 
-        board.makeMove(Hedge1,p1);
-        board.makeMove(Hedge2,p1);
-        board.makeMove(Vedge1,p1);
+        board.makeMove(Hedge1,p2);
+        board.makeMove(Hedge2,p2);
+        board.makeMove(Vedge1,p2);
         board.makeMove(Vedge2,p2);
 
         board.printBoard(p1,p2);
