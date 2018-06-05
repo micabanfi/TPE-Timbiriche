@@ -10,8 +10,8 @@ public class TesterBoards {
         Edge Vedge1=new Edge(2,3,false);
         Edge Vedge2=new Edge(2,2,false);
 
-        Player p1=new Player(true,1);
-        Player p2=new Player(true,2);
+        Player p1=new humanPlayer(1);
+        Player p2=new humanPlayer(2);
 
         board.makeMove(Hedge1,p2);
         board.makeMove(Hedge2,p2);

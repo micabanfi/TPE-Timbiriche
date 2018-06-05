@@ -38,18 +38,11 @@ public class Board {
         this.hEdges=new int[n][n-1];
         this.vEdges=new int[n-1][n];
         this.boxes=new int[n-1][n-1];
-        this.edgesLeft=n;
+        this.edgesLeft=2*n*(n-1);
     }
 
-    public int makeMove(Edge edge,Player player){
-        markMove(edge,player);
-        edgesLeft--;
-        if(edgesLeft==0)
-            return 0;
-        return 1;
-    }
 
-    private void markMove(Edge edge,Player player){
+    private void makeMove(Edge edge,Player player){
         int i=edge.iPosition();
         int j=edge.jPosition();
         if(edge.isHorizontal()){
@@ -58,7 +51,7 @@ public class Board {
                 if(this.hEdges[i-1][j]==1){
                     if(this.vEdges[i-1][j]==1 && this.vEdges[i-1][j+1]==1){
                         this.boxes[i-1][j]=player.getPlayerNumber();
-                        player.setScore();//aumnto el score del player en 1;
+                        player.incScore();//aumento el score del player en 1;
                     }
                 }
             }
@@ -66,7 +59,7 @@ public class Board {
                 if(this.hEdges[i+1][j]==1){
                     if(this.vEdges[i][j]==1 && this.vEdges[i][j+1]==1) {
                         this.boxes[i][j] = player.getPlayerNumber();
-                        player.setScore();//aumnto el score del player en 1;
+                        player.incScore();//aumento el score del player en 1;
                     }
 
                 }
@@ -74,11 +67,11 @@ public class Board {
         }
         else{
             this.vEdges[i][j]=1;
-            if(j!=0){//chequeo el cuaadrado que puedo formar a la izquierda de mi linea vertical
+            if(j!=0){//chequeo el cuadrado que puedo formar a la izquierda de mi linea vertical
                 if(this.vEdges[i][j-1]==1){
                     if(this.hEdges[i][j-1]==1 && this.hEdges[i+1][j-1]==1){
                         this.boxes[i][j-1]=player.getPlayerNumber();
-                        player.setScore();//aumnto el score del player en 1;
+                        player.incScore();//aumnto el score del player en 1;
 
                     }
                 }
@@ -87,11 +80,16 @@ public class Board {
                 if(this.vEdges[i][j+1]==1){
                     if(this.hEdges[i][j]==1 && this.hEdges[i+1][j]==1) {
                         this.boxes[i][j] = player.getPlayerNumber();
-                        player.setScore();//aumnto el score del player en 1;
+                        player.incScore();//aumento el score del player en 1;
                     }
                 }
             }
         }
+        edgesLeft--;
+    }
+
+    public boolean isOver(){
+        return edgesLeft==0;
     }
 
 
