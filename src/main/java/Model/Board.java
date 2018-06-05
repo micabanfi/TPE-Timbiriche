@@ -42,7 +42,7 @@ public class Board {
     }
 
 
-    private void makeMove(Edge edge,Player player){
+    public void makeMove(Edge edge,Player player){
         int i=edge.iPosition();
         int j=edge.jPosition();
         if(edge.isHorizontal()){
