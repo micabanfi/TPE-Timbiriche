@@ -7,6 +7,32 @@ public class Board {
     private int boxes[][];
     private int edgesLeft;
 
+    public void printBoard(Player p1,Player p2){
+        System.out.println("Print boxes:");
+        for(int i = 0; i < n-1; i++) {
+            for(int j = 0; j < n-1; j++) {
+                System.out.print(boxes[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+        System.out.println("Print horizontal:");
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n-1; j++) {
+                System.out.print(hEdges[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+        System.out.println("Print vertical:");
+        for(int i = 0; i < n-1; i++) {
+            for(int j = 0; j < n; j++) {
+                System.out.print(vEdges[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+
+        System.out.println("Player 1: "+p1.getScore()+" Player 2: "+p2.getScore());
+    }
+
     public Board(int n){
         this.n=n;
         this.hEdges=new int[n][n-1];
@@ -32,6 +58,7 @@ public class Board {
                 if(this.hEdges[i-1][j]==1){
                     if(this.vEdges[i-1][j]==1 && this.vEdges[i-1][j+1]==1){
                         this.boxes[i-1][j]=player.getPlayerNumber();
+                        player.setScore();//aumnto el score del player en 1;
                     }
                 }
             }
@@ -39,25 +66,32 @@ public class Board {
                 if(this.hEdges[i+1][j]==1){
                     if(this.vEdges[i][j]==1 && this.vEdges[i][j+1]==1)
                         this.boxes[i][j]=player.getPlayerNumber();
+                         player.setScore();//aumnto el score del player en 1;
+
                 }
             }
         }
         else{
             this.vEdges[i][j]=1;
-            if(j!=0){
+            if(j!=0){//chequeo el cuaadrado que puedo formar a la izquierda de mi linea vertical
                 if(this.vEdges[i][j-1]==1){
                     if(this.hEdges[i][j-1]==1 && this.hEdges[i+1][j-1]==1){
                         this.boxes[i][j-1]=player.getPlayerNumber();
+                        player.setScore();//aumnto el score del player en 1;
+
                     }
                 }
             }
-            if(j!=n-2){
-                if(this.hEdges[i][j+1]==1){
-                    if(this.vEdges[i][j]==1 && this.vEdges[i+1][j]==1)
+            if(j!=n-1){//chequeo el cuadrado formado a la derecha de mi linea vertical
+                if(this.vEdges[i][j+1]==1){
+                    if(this.hEdges[i][j]==1 && this.hEdges[i+1][j]==1)
                         this.boxes[i][j]=player.getPlayerNumber();
+                        player.setScore();//aumnto el score del player en 1;
+
                 }
             }
         }
     }
+
 
 }

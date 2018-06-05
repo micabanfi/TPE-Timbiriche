@@ -16,4 +16,11 @@ public class Player {
         return this.playerNumber;
     }
 
+    public void setScore() {
+        this.score++;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }
