@@ -33,7 +33,7 @@ public class GameWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-//    	GameWindow window = new GameWindow();
+    	GameWindow window = new GameWindow();
 //    	BoardGUI gui = new BoardGUI();
 //        gui.n = 2;
 //        gui.board = new int[2][2];

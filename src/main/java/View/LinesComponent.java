@@ -47,9 +47,10 @@ public class LinesComponent extends JPanel implements MouseListener {
 		return;
 	}
 	
-	public static void resetSelectedNodes() {
+	public void resetSelectedNodes() {
 		nodeSelected1 = null;
 		nodeSelected2 = null;
+		repaint();
 		return;
 	}
 
@@ -69,13 +70,15 @@ public class LinesComponent extends JPanel implements MouseListener {
 		Node.width = getWidth();
 		Graphics2D g2 = (Graphics2D) g;
 	    super.paintComponent(g);
-	    for(Node n : nodes) {
-	    	n.paintComponent(g2);
-	    }
+	    g2.setColor(Color.lightGray);
 	    g2.setStroke(new BasicStroke(5));
 	    for (Line line : lines) {
 	        g2.drawLine(line.n1.x + Node.radius, line.n1.y + Node.radius,
 	        		line.n2.x + Node.radius, line.n2.y + Node.radius);
+	    }
+	    g2.setColor(Color.darkGray);
+	    for(Node n : nodes) {
+	    	n.paintComponent(g2);
 	    }
 	}
 
@@ -105,7 +108,7 @@ public class LinesComponent extends JPanel implements MouseListener {
 			x = (int) ((column + 0.5) * (width / n)) - radius;
 			y = (int) ((line + 0.5) * (height / n)) - radius;
 			this.lc = lc;
-			//setBorder(BorderFactory.createLineBorder(Color.black));
+			setBorder(BorderFactory.createLineBorder(Color.black));
 			addMouseListener(this);
 		}
 		
@@ -115,6 +118,9 @@ public class LinesComponent extends JPanel implements MouseListener {
 			y = (int) ((line + 0.5) * (height / n)) - radius;
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
+			if(this == nodeSelected1 || this == nodeSelected2) {
+				g2.setColor(Color.yellow);
+			}
 	        g2.fillOval(x, y, 2 * radius, 2 * radius);
 		}
 		
@@ -135,9 +141,7 @@ public class LinesComponent extends JPanel implements MouseListener {
 				nodeSelected2 = this;
 				lc.checkAddLine();
 			}
-//			Graphics g = getGraphics();
-//			g.setColor(Color.lightGray);
-//			repaint();
+			repaint();
 		}
 
 		@Override
