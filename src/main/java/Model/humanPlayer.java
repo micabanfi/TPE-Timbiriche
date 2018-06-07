@@ -25,6 +25,5 @@ public class humanPlayer implements Player{
     //llama en algun momento a makeMove de Board
     //recibe desde el controller que recibe desde el view lo que elige el jugador humano
     public Edge play(){
-
     }
 }

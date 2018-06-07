@@ -5,7 +5,7 @@ public class Model {
     private Player p1;
     private Player p2;
     private int role;
-    private Boolean time; //false -> depth
+    private Boolean mode; //false -> depth
     private int param;
     private Boolean prune;
 
@@ -34,10 +34,10 @@ public class Model {
         this.role=role;
         switch(mode){
             case "time":
-                this.time=true;
+                this.mode=true;
                 break;
             case "depth":
-                this.time=false;
+                this.mode=false;
                 break;
             default:
                 throw new IllegalArgumentException();
