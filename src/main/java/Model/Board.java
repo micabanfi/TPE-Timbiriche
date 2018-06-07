@@ -119,8 +119,7 @@ public class Board {
     public int getHeuristic(int playerNumber){
         if(playerNumber==1)
             return p1Score-p2Score;
-        else
-            return p2Score-p1Score;
+        return p2Score-p1Score;
     }
 
     public List<Edge> getAvailableMoves(){
@@ -163,9 +162,13 @@ public class Board {
 
     public Board getNewBoard(Edge edge){
         Board aux=this.clone();
-        
-
+        if(edge.isHorizontal())
+            hEdges[edge.iPosition()][edge.jPosition()]=1;
+        else
+            vEdges[edge.iPosition()][edge.jPosition()]=1;
+        return aux;
     }
+
 
 
 }
