@@ -3,6 +3,7 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class GameWindow extends JFrame {
 	private LinesComponent linesComp;
 	
@@ -17,7 +18,8 @@ public class GameWindow extends JFrame {
     	JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
     	headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
     	
-    	linesComp = new LinesComponent(14);
+    	// Hay que pasar el numero de lado
+    	linesComp = new LinesComponent(12);
     	
     	JPanel bottomPanel = new JPanel();
     	JButton undoButton = new JButton("Undo");
@@ -31,7 +33,7 @@ public class GameWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-    	GameWindow window = new GameWindow();
+//    	GameWindow window = new GameWindow();
 //    	BoardGUI gui = new BoardGUI();
 //        gui.n = 2;
 //        gui.board = new int[2][2];
