@@ -1,12 +1,10 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package View;
 
+import java.awt.*;
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
-	JPanel boardPanel;
-	//private Board board;
+	private LinesComponent linesComp;
 	
     public int[][] board;
     public int n;
@@ -16,31 +14,19 @@ public class GameWindow extends JFrame {
     	setSize(700, 700);
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
-    	JLabel headerLabel = new JLabel("TIMBIRICHE",JLabel.CENTER );
+    	JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
     	headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
     	
-    	boardPanel = new JPanel()
-//    	{
-//    	    protected void paintComponent(Graphics g) {
-//    	        super.paintComponent(g);
-//    	        g.drawLine(0,0, 20, 35);
-//    	    }}
-    	;
+    	linesComp = new LinesComponent(14);
     	
-//    	JPanel panel = new JPanel();
-//    	panel.setBackground(Color.white);
-//    	panel.setPreferredSize(new Dimension(500, 500));
-//    	boardPanel.add(panel);
-    	
-    	final LinesComponent comp = new LinesComponent();
-    	comp.setBackground(Color.darkGray);
-        comp.setPreferredSize(new Dimension(320, 200));
-        
-    	boardPanel.add(comp);
+    	JPanel bottomPanel = new JPanel();
+    	JButton undoButton = new JButton("Undo");
+    	bottomPanel.add(undoButton);
 
     	getContentPane().add(headerLabel, BorderLayout.PAGE_START);
-    	getContentPane().add(boardPanel, BorderLayout.CENTER);
-    	//pack();
+    	getContentPane().add(linesComp, BorderLayout.CENTER);
+    	getContentPane().add(bottomPanel, BorderLayout.PAGE_END);
+    	
     	setVisible(true);
     }
 
