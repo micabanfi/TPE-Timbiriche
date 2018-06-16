@@ -6,33 +6,38 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame {
 	private LinesComponent linesComp;
-	
-    public int[][] board;
-    public int n;
-    
-    public GameWindow() {
-    	setTitle("Timbiriche");
-    	setSize(700, 700);
-    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	
-    	JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
-    	headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
-    	
-    	// Hay que pasar el numero de lado
-    	linesComp = new LinesComponent(12);
-    	
-    	JPanel bottomPanel = new JPanel();
-    	JButton undoButton = new JButton("Undo");
-    	bottomPanel.add(undoButton);
 
-    	getContentPane().add(headerLabel, BorderLayout.PAGE_START);
-    	getContentPane().add(linesComp, BorderLayout.CENTER);
-    	getContentPane().add(bottomPanel, BorderLayout.PAGE_END);
-    	
-    	setVisible(true);
-    }
+	public int[][] board;
+	public int n;
 
-    public static void main(String[] args) {
+	public GameWindow(int size) {
+		setTitle("Timbiriche");
+		setSize(700, 700);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
+		headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
+
+
+		// Hay que pasar el numero de lado
+		linesComp = new LinesComponent(size);
+
+		JPanel bottomPanel = new JPanel();
+		JButton undoButton = new JButton("Undo");
+		bottomPanel.add(undoButton);
+
+
+
+
+		getContentPane().add(headerLabel, BorderLayout.PAGE_START);
+		getContentPane().add(linesComp, BorderLayout.CENTER);
+		getContentPane().add(bottomPanel, BorderLayout.PAGE_END);
+
+		setVisible(true);
+	}
+}
+
+    /*public static void main(String[] args) {
     	GameWindow window = new GameWindow();
 //    	BoardGUI gui = new BoardGUI();
 //        gui.n = 2;
@@ -83,4 +88,4 @@ public class GameWindow extends JFrame {
 //            System.out.print('\n');
 //        }
 //    }
-}
+}*/

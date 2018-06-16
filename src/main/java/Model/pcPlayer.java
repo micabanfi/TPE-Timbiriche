@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class pcPlayer implements Player{
+public class  pcPlayer implements Player{
     private int score;
     private int playerNumber;
     private static Boolean stopSearch=false;
@@ -27,7 +27,10 @@ public class pcPlayer implements Player{
 
     //llama en algun momento a makeMove de Board
     //aca va la IA
-    public Edge play(Board board, Boolean model, int depth){
+    public Edge play(Object... arguments){
+        Board board= (Board) arguments[0];
+        Boolean model= (Boolean) arguments[1];
+        int depth= (int) arguments[2];
         Edge bestMove=null;
         Integer bestHeuristic=Integer.MIN_VALUE;
         int nodeHeuristic;
@@ -55,6 +58,7 @@ public class pcPlayer implements Player{
                 }
                 //caso que sea igual hay que hacer random no se como
             }
+            return bestMove;
     }
 
     private int ids(Node state,Boolean model,int depth){
@@ -103,9 +107,10 @@ public class pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
+
                 Node child=new Node(state.getBoard().getNewBoard(e),this.playerNumber);
 
-                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta);//, startTime, timeLimit));
+                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
 
                 if (beta <= alpha) {
                     break;//no esta bueno esto
@@ -117,7 +122,7 @@ public class pcPlayer implements Player{
             for(Edge e:availableMoves){
                 Node child=new Node(state.getBoard().getNewBoard(e),this.playerNumber);
 
-                beta = Math.min(beta, search(child, depth - 1, alpha, beta);//, startTime, timeLimit));
+                beta = Math.min(beta, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
 
                 if (beta <= alpha) {
                     break;//no esta bueno esto

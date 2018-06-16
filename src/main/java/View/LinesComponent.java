@@ -141,8 +141,11 @@ public class LinesComponent extends JPanel implements MouseListener {
 				nodeSelected2 = this;
 				lc.checkAddLine();
 			}
+
 			repaint();
 		}
+
+
 
 		@Override
 		public void mouseEntered(MouseEvent e) {}
