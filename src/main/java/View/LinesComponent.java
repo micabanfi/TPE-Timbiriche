@@ -194,9 +194,7 @@ public class LinesComponent extends JPanel {
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println("Clicked (" + line + ", " + column + ")");
-			
+		public void mouseClicked(MouseEvent e) {			
 			if(nodeSelected1 == null) {
 				nodeSelected1 = this;
 			} else {

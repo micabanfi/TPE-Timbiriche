@@ -26,24 +26,26 @@ public class Model {
     public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException{
         this.undo=new LinkedList<>();
         this.board=new Board(n);
-        turn=1;
         switch(role){
             case 0:
                 this.p1=new humanPlayer(1);
                 this.p2=new humanPlayer(2);
+                this.turn = 1;
                 break;
             case 1:
                 this.p1=new pcPlayer(1);
                 this.p2=new humanPlayer(2);
-
+                this.turn = 2;
                 break;
             case 2:
                 this.p1=new humanPlayer(1);
                 this.p2=new pcPlayer(2);
+                this.turn = 1;
                 break;
             case 3:
                 this.p1=new pcPlayer(1);
                 this.p2=new pcPlayer(2);
+                this.turn = 1;
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -101,13 +103,12 @@ public class Model {
 
     public void addMove(Edge edge) {//1 si gano 1,2 si gano 2,3 si empate
         undo.add(edge);
-        if(turn==1) {
-            turn=board.makeMove(edge, p1);//deveria devolver a quien le toca seguir jugando
+        if(turn == 1) {
+            turn = board.makeMove(edge, p1);//deberia devolver a quien le toca seguir jugando
         }
         else {
-            turn=board.makeMove(edge,p2);
+            turn = board.makeMove(edge,p2);
         }
-        System.out.println("Turno Jugador " + turn);
         return;
     }
 
@@ -117,6 +118,10 @@ public class Model {
 
     public int getScoreP2(){
         return p2.getScore();
+    }
+    
+    public int getTurn() {
+    	return turn;
     }
 
   /*  //retorna 1 si gana p1,2 si gana p2, 3 si es empate

@@ -44,7 +44,6 @@ public class Board {
                             p2Score++;
                             return 2;
                         }
-
                     }
                 }
             }
@@ -64,7 +63,6 @@ public class Board {
                             return 2;
                         }
                     }
-
                 }
             }
         }
@@ -85,7 +83,6 @@ public class Board {
                             p2Score++;
                             return 2;
                         }
-
                     }
                 }
             }
@@ -109,7 +106,6 @@ public class Board {
             }
         }
         edgesLeft--;
-        System.out.println(edgesLeft);
         return player.getPlayerNumber()==1?2:1;//no hizo punto,retorna numero del otro jugador
 
     }
