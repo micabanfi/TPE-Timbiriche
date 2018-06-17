@@ -39,7 +39,7 @@ public class  pcPlayer implements Player{
             List<Edge> availableMoves=board.getAvailableMoves();
 
             //hay que ver como cortar aca
-            for(Edge e:availableMoves){
+            /*for(Edge e:availableMoves){
                 Node child=new Node(board.getNewBoard(e),this.playerNumber);
 
 //                if(model)//time
@@ -57,8 +57,10 @@ public class  pcPlayer implements Player{
                     bestMove=e;
                 }
                 //caso que sea igual hay que hacer random no se como
-            }
-            return bestMove;
+            }*/
+            Edge e=new Edge(0,0,true);
+           return e;
+            //return bestMove;
     }
 
     private int ids(Node state,Boolean model,int depth){

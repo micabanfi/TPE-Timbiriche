@@ -25,6 +25,7 @@ public class Board {
 
 
     public int makeMove(Edge edge,Player player){
+        //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
         int i=edge.iPosition();
         int j=edge.jPosition();
         if(edge.isHorizontal()){
@@ -172,11 +173,11 @@ public class Board {
 
         for(int i=0; i<(n-1); i++)
             for(int j=0; j<n; j++)
-                cloned.hEdges[i][j] = hEdges[i][j];
+                cloned.vEdges[i][j] = vEdges[i][j];
 
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
-                cloned.vEdges[i][j] = vEdges[i][j];
+                cloned.hEdges[i][j] = hEdges[i][j];
 
         for(int i=0; i<(n-1); i++)
             for(int j=0; j<(n-1); j++)

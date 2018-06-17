@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import javax.swing.*;
 
 import Model.*;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 @SuppressWarnings("serial")
 public class LinesComponent extends JPanel {
@@ -32,21 +33,24 @@ public class LinesComponent extends JPanel {
 	}
 	
 	public void checkNodesSelected() {
-		if(nodeSelected1 != nodeSelected2) {
-			if(nodeSelected1.getLine() == nodeSelected2.getLine()) {
-				if(Math.abs(nodeSelected1.getColumn() - nodeSelected2.getColumn()) == 1) {
-					edge = new Edge(nodeSelected1.getLine(), minColumn(), true);
-					nodesSelected = true;
-					addLine(nodeSelected1, nodeSelected2);
-				}
-			} else if(nodeSelected1.getColumn() == nodeSelected2.getColumn()) {
-				if(Math.abs(nodeSelected1.getLine() - nodeSelected2.getLine()) == 1) {
-					edge = new Edge(minLine(), nodeSelected1.getColumn(), false);
-					nodesSelected = true;
-					addLine(nodeSelected1, nodeSelected2);
+			if (nodeSelected1 != nodeSelected2) {
+				if (nodeSelected1.getLine() == nodeSelected2.getLine()) {
+					if (Math.abs(nodeSelected1.getColumn() - nodeSelected2.getColumn()) == 1) {
+						//System.out.println("edge:" + nodeSelected1.getLine() + minColumn() + true);
+						edge = new Edge(nodeSelected1.getLine(), minColumn(), true);
+						nodesSelected = true;
+						addLine(nodeSelected1, nodeSelected2);
+
+					}
+				} else if (nodeSelected1.getColumn() == nodeSelected2.getColumn()) {
+					if (Math.abs(nodeSelected1.getLine() - nodeSelected2.getLine()) == 1) {
+						//System.out.println("EDGE:" + minLine() + nodeSelected1.getColumn() + false);
+						edge = new Edge(minLine(), nodeSelected1.getColumn(), false);
+						nodesSelected = true;
+						addLine(nodeSelected1, nodeSelected2);
+					}
 				}
 			}
-		}
 		resetSelectedNodes();
 		return;
 	}
@@ -69,7 +73,6 @@ public class LinesComponent extends JPanel {
 			
 		}
 		nodesSelected = false;
-		System.out.println("Edge: " + edge.iPosition() + " " + edge.jPosition() + " " + edge.isHorizontal());
 		return edge;
 	}
 	

@@ -93,11 +93,13 @@ public class Model {
         }
     }
 
+
     public Edge play() {
     	if(turn==1) {
-    		return p1.play();
+
+    		return p1.play(board,mode,param);
     	} else {
-    		return p2.play();
+    		return p2.play(board,mode,param);
     	}
     }
 
@@ -112,6 +114,10 @@ public class Model {
         return;
     }
 
+    public int getTurn(){
+        return turn;
+    }
+
     public int getScoreP1(){
         return p1.getScore();
     }
@@ -120,8 +126,11 @@ public class Model {
         return p2.getScore();
     }
     
-    public int getTurn() {
-    	return turn;
+    public boolean isHumanTurn(){
+        if(turn==1){
+            return p1 instanceof humanPlayer;
+        }
+        return p2 instanceof humanPlayer;
     }
 
   /*  //retorna 1 si gana p1,2 si gana p2, 3 si es empate
