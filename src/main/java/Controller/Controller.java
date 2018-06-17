@@ -6,12 +6,14 @@ import View.GameWindow;
 
 public class Controller {
     public static void main(String[] args) {
-        Model gameModel=new Model(Integer.parseInt(args[1]),Integer.parseInt(args[3]),args[5],Integer.parseInt(args[7]),args[9]);
+        Model gameModel=new Model(Integer.parseInt(args[1]), Integer.parseInt(args[3]), args[5], Integer.parseInt(args[7]), args[9]);
         GameWindow window=new GameWindow(Integer.parseInt(args[1]), Integer.parseInt(args[3]));
         gameModel.printModelInfo();
+        
         Edge e=new Edge(0,0,true);
         System.out.println("EDGE="+e.iPosition());
         window.paintEdge(e);
+        
         while(!gameModel.isOver()){
         	window.setTurnText(gameModel.getTurn());
             if(gameModel.isHumanTurn()){

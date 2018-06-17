@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import javax.swing.*;
 
 import Model.*;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 @SuppressWarnings("serial")
 public class LinesComponent extends JPanel {
@@ -82,14 +81,10 @@ public class LinesComponent extends JPanel {
 		int j = edge.jPosition();
 		
 		if(edge.isHorizontal()) {
-			nodeSelected1 = getNode(i, j);
-			nodeSelected2 = getNode(i, j + 1);
+			addLine(getNode(i, j), getNode(i, j + 1));
 		} else {
-			nodeSelected1 = getNode(i, j);
-			nodeSelected2 = getNode(i + 1, j);
+			addLine(getNode(i, j), getNode(i + 1, j));
 		}
-		
-		addLine(nodeSelected1, nodeSelected2);
 		return;
 	}
 	
