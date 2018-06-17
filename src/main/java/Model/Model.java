@@ -79,37 +79,35 @@ public class Model {
        return board.isOver();
     }
 
-    public int over(){
-            if(p1.getScore()>p2.getScore()){//gana 1
-                return 1;
-            }
-            else if(p2.getScore()>p1.getScore()){//gana 2
-                return 2;
-            }
-            else{//empate
-                return 3;
-            }
+    public int over() {
+        if(p1.getScore() > p2.getScore()) {//gana 1
+            return 1;
+        }
+        else if(p2.getScore() > p1.getScore()) {//gana 2
+            return 2;
+        }
+        else {//empate
+           return 3;
+        }
     }
 
-    public Edge play(){
-            if(turn==1){
-               return p1.play();
-            }
-            else{
-                return p2.play();
-            }
+    public Edge play() {
+    	if(turn==1) {
+    		return p1.play();
+    	} else {
+    		return p2.play();
+    	}
     }
 
-    public void addMove(Edge edge){//1 si gano 1,2 si gano 2,3 si empate
+    public void addMove(Edge edge) {//1 si gano 1,2 si gano 2,3 si empate
         undo.add(edge);
         if(turn==1) {
-
             turn=board.makeMove(edge, p1);//deveria devolver a quien le toca seguir jugando
         }
         else {
             turn=board.makeMove(edge,p2);
         }
-
+        return;
     }
 
     public int getScoreP1(){
