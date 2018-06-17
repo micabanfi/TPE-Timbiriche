@@ -13,6 +13,7 @@ public class Controller {
         System.out.println("EDGE="+e.iPosition());
         window.paintEdge(e);
         while(!gameModel.isOver()){
+        	window.setTurnText(gameModel.getTurn());
             if(gameModel.isHumanTurn()){
                 System.out.println("Turno jugador "+gameModel.getTurn());
                 gameModel.addMove(window.getEdge());
