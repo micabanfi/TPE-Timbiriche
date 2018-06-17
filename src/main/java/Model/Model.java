@@ -107,6 +107,7 @@ public class Model {
         else {
             turn=board.makeMove(edge,p2);
         }
+        System.out.println("Turno Jugador " + turn);
         return;
     }
 

@@ -35,10 +35,12 @@ public class Board {
                         this.boxes[i-1][j]=player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
+                        	edgesLeft--;
                             p1Score++;
                             return 1;//le toca seguir jugando a p1
                         }
                         else{
+                        	edgesLeft--;
                             p2Score++;
                             return 2;
                         }
@@ -52,10 +54,12 @@ public class Board {
                         this.boxes[i][j] = player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
+                        	edgesLeft--;
                             p1Score++;
                             return 1;//le toca seguir jugando a p1
                         }
                         else{
+                        	edgesLeft--;
                             p2Score++;
                             return 2;
                         }
@@ -72,10 +76,12 @@ public class Board {
                         this.boxes[i][j-1]=player.getPlayerNumber();
                         player.incScore();//aumnto el score del player en 1;
                         if(player.getPlayerNumber()==1){
+                        	edgesLeft--;
                             p1Score++;
                             return 1;//le toca seguir jugando a p1
                         }
                         else{
+                        	edgesLeft--;
                             p2Score++;
                             return 2;
                         }
@@ -89,10 +95,12 @@ public class Board {
                         this.boxes[i][j] = player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
+                        	edgesLeft--;
                             p1Score++;
                             return 1;//le toca seguir jugando a p1
                         }
                         else{
+                        	edgesLeft--;
                             p2Score++;
                             return 2;
                         }
@@ -101,6 +109,7 @@ public class Board {
             }
         }
         edgesLeft--;
+        System.out.println(edgesLeft);
         return player.getPlayerNumber()==1?2:1;//no hizo punto,retorna numero del otro jugador
 
     }

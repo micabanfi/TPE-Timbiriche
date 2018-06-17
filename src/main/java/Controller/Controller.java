@@ -10,12 +10,8 @@ public class Controller {
         gameModel.printModelInfo();
         while(!gameModel.isOver()) {
             if(gameModel.play() == null) {//human player retorna null jugando
-                
-                if(window.nodesSelected()) {
-                	gameModel.addMove(window.getEdge());
-                }
+                gameModel.addMove(window.getEdge());
                	
-
 
             }
             else {//le toca a la pc y va a retornar un EDGE

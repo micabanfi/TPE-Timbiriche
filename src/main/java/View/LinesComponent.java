@@ -15,7 +15,7 @@ public class LinesComponent extends JPanel {
 	private LinkedList<Node> nodes = new LinkedList<>();
 	private static Node nodeSelected1;
 	private static Node nodeSelected2;
-	private boolean nodesSelected;
+	private volatile boolean nodesSelected;
 	private Edge edge;
 	
 	public LinesComponent(int n) {
@@ -43,7 +43,7 @@ public class LinesComponent extends JPanel {
 				if(Math.abs(nodeSelected1.getLine() - nodeSelected2.getLine()) == 1) {
 					edge = new Edge(minLine(), nodeSelected1.getColumn(), false);
 					nodesSelected = true;
-					addLine(nodeSelected1, nodeSelected2);		
+					addLine(nodeSelected1, nodeSelected2);
 				}
 			}
 		}
@@ -65,7 +65,11 @@ public class LinesComponent extends JPanel {
 	
 	// Returns Edge chosen by Human Player
 	public Edge getEdge() {
+		while(!nodesSelected) {
+			
+		}
 		nodesSelected = false;
+		System.out.println("Edge: " + edge.iPosition() + " " + edge.jPosition() + " " + edge.isHorizontal());
 		return edge;
 	}
 	
