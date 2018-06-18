@@ -81,8 +81,6 @@ public class  pcPlayer implements Player{
         stopSearch=false;
         int heuristic=state.getHeuristic(this.playerNumber);
 
-        Boolean running=true;
-
         while(running) {
 
             //long currentTime = System.currentTimeMillis();
@@ -118,6 +116,7 @@ public class  pcPlayer implements Player{
         //
         if(depth==0){
            running=false;
+           return score;
         }
         if (depth == 0 || (availableMoves.size() == 0)){ //|| (score >= winCutoff) || (score <= -winCutoff) || searchCutOff) {
             return score;
