@@ -55,4 +55,11 @@ public class GameWindow extends JFrame {
 		scorePanel.setScoreTextP2(score);
 	}
 	
+	public void endGame(int winner) {
+		scorePanel.setEndGameText(winner);
+		this.remove(boardPanel);
+		repaint();
+		return;
+	}
+	
 }

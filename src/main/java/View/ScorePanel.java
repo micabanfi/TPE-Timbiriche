@@ -74,4 +74,24 @@ public class ScorePanel extends JPanel {
 	public void setScoreTextP2(int score) {
 		scoreP2.setText(player2 + score);
 	}
+	
+	public void setEndGameText(int winner) {
+		if(winner != 3) {
+			if(ai == 0) {
+				turnLabel.setText("Player " + winner + " wins!");
+			} else if(ai == 1 || ai == 2) {
+				if(winner == 1) {
+					turnLabel.setText("Player wins!");
+				} else {
+					turnLabel.setText("AI wins!");
+				}
+			} else {
+				turnLabel.setText("AI " + winner + " wins!");
+			}
+		} else {
+			turnLabel.setText("It's a draw!");
+		}
+		return;
+	}
+	
 }

@@ -26,15 +26,14 @@ public class Controller {
                 Edge ee=gameModel.play();
                 gameModel.addMove(e);
                 System.out.println("COMPUTER EDGE:"+e.iPosition());
-               window.paintEdge(e);
+                window.paintEdge(e);
                 System.out.println("Ya elijio pc");
 
             }
             window.setScoreP1(gameModel.getScoreP1());
             window.setScoreP2(gameModel.getScoreP2());
         }
-        int rta = gameModel.over();
-        //window.printScore(rta);
-        System.out.println("Ganador: " + rta);
+        
+        window.endGame(gameModel.over());
     }
 }
