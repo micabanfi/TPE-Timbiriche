@@ -27,6 +27,7 @@ public class Board {
     public int makeMove(Move move, Player player){
     	Edge edge = move.getEdge();
         //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
+        Boolean someoneScored=false;
         int i=edge.iPosition();
         int j=edge.jPosition();
         if(edge.isHorizontal()){
@@ -37,15 +38,16 @@ public class Board {
                         this.boxes[i-1][j]=player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
-                        	edgesLeft--;
+                        	//edgesLeft--;
                             p1Score++;
-                            return 1;//le toca seguir jugando a p1
+                            //return 1;//le toca seguir jugando a p1
                         }
                         else{
-                        	edgesLeft--;
+                        	//edgesLeft--;
                             p2Score++;
-                            return 2;
+                            //return 2;
                         }
+                        someoneScored=true;
                     }
                 }
             }
@@ -55,15 +57,16 @@ public class Board {
                         this.boxes[i][j] = player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
-                        	edgesLeft--;
+                        	//edgesLeft--;
                             p1Score++;
-                            return 1;//le toca seguir jugando a p1
+                            //return 1;//le toca seguir jugando a p1
                         }
                         else{
-                        	edgesLeft--;
+                        	//edgesLeft--;
                             p2Score++;
-                            return 2;
+                            //return 2;
                         }
+                        someoneScored=true;
                     }
                 }
             }
@@ -76,15 +79,12 @@ public class Board {
                         this.boxes[i][j-1]=player.getPlayerNumber();
                         player.incScore();//aumnto el score del player en 1;
                         if(player.getPlayerNumber()==1){
-                        	edgesLeft--;
                             p1Score++;
-                            return 1;//le toca seguir jugando a p1
                         }
                         else{
-                        	edgesLeft--;
                             p2Score++;
-                            return 2;
                         }
+                        someoneScored=true;
                     }
                 }
             }
@@ -94,20 +94,20 @@ public class Board {
                         this.boxes[i][j] = player.getPlayerNumber();
                         player.incScore();//aumento el score del player en 1;
                         if(player.getPlayerNumber()==1){
-                        	edgesLeft--;
                             p1Score++;
-                            return 1;//le toca seguir jugando a p1
                         }
                         else{
-                        	edgesLeft--;
                             p2Score++;
-                            return 2;
                         }
+                        someoneScored=true;
                     }
                 }
             }
         }
         edgesLeft--;
+        //System.out.println("Faltan:"+edgesLeft);
+        if(someoneScored)
+            return player.getPlayerNumber()==1?1:2;
         return player.getPlayerNumber()==1?2:1;//no hizo punto,retorna numero del otro jugador
 
     }

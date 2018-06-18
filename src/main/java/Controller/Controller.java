@@ -6,14 +6,12 @@ import View.GameWindow;
 
 public class Controller {
     public static void main(String[] args) {
-        Model gameModel=new Model(Integer.parseInt(args[1]), Integer.parseInt(args[3]), args[5], Integer.parseInt(args[7]), args[9]);
-        GameWindow window=new GameWindow(Integer.parseInt(args[1]), Integer.parseInt(args[3]));
-        gameModel.printModelInfo();
-        
-        Edge e=new Edge(0,0,true);
+        Model gameModel=new Model(Integer.parseInt(args[1]),Integer.parseInt(args[3]),args[5],Integer.parseInt(args[7]),args[9]);
+        GameWindow window=new GameWindow(Integer.parseInt(args[1]),Integer.parseInt(args[3]));
+        //gameModel.printModelInfo();
+        /*Edge e=new Edge(0,0,true);
         System.out.println("EDGE="+e.iPosition());
-        window.paintEdge(e);
-        
+        window.paintEdge(e);*/
         while(!gameModel.isOver()){
         	window.setTurnText(gameModel.getTurn());
             if(gameModel.isHumanTurn()){
@@ -30,9 +28,9 @@ public class Controller {
             }
             else{//le toca a la pc y va a retornar un EDGE
                 System.out.println("Turno Computadora "+gameModel.getTurn());
-                Edge ee=gameModel.play();
+                Edge e=gameModel.play();
+                System.out.println("Computer EDGE:"+e.iPosition()+"-"+e.jPosition()+"-"+e.isHorizontal());
                 gameModel.addMove(e);
-                System.out.println("COMPUTER EDGE:"+e.iPosition());
                 window.paintEdge(e);
                 System.out.println("Ya elijio pc");
 

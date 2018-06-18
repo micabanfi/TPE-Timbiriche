@@ -8,6 +8,9 @@ public class  pcPlayer implements Player{
     private int score;
     private int playerNumber;
     private static Boolean stopSearch=false;
+    private static Boolean running=true;
+
+
 
     public pcPlayer(int playerNumber){
         this.playerNumber=playerNumber;
@@ -36,59 +39,67 @@ public class  pcPlayer implements Player{
         int nodeHeuristic;
         //hago solo como si fuese depth, por ahora paso model al pedo
 
-            List<Edge> availableMoves=board.getAvailableMoves();
+        List<Edge> availableMoves=board.getAvailableMoves();
 
-            //hay que ver como cortar aca
-            /*for(Edge e:availableMoves){
-                Node child=new Node(board.getNewBoard(e),this.playerNumber);
+        //hay que ver como cortar aca
+        for(Edge e:availableMoves){
+
+            Node child=new Node(board.getNewBoard(e),this.playerNumber);
 
 //                if(model)//time
 //                    limit=param/availableMoves.size();
 //                else
 //                    limit=param;
 //
-                if(depth>1)
+                if(depth>1){
+
                     nodeHeuristic=ids(child,model,depth-1);
-                else
+
+                }
+
+
+                else{
                     nodeHeuristic=child.getHeuristic(this.playerNumber);
+
+                }
 
                 if(nodeHeuristic>bestHeuristic){
                     bestHeuristic=nodeHeuristic;
                     bestMove=e;
                 }
                 //caso que sea igual hay que hacer random no se como
-            }*/
-            Edge e=new Edge(0,0,true);
-           return e;
-            //return bestMove;
+            }
+
+            return bestMove;
     }
 
     private int ids(Node state,Boolean model,int depth){
-
+        //int score=0;
 //        if(model)//time
 //            // long startTime = System.currentTimeMillis();
 //        long endTime = startTime + timeLimit;
-
         stopSearch=false;
         int heuristic=state.getHeuristic(this.playerNumber);
 
-//        Boolean running=true;
+        while(running) {
 
-//        while(running) {
             //long currentTime = System.currentTimeMillis();
-            //if (currentTime <= endTime) {
-                int searchResult=search(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            //if (currentTime <= endTime) {}
+            int searchResult=search(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-//                if(!stopSearch){
-//                    heuristic=searchResult;
-//                }
-            //}
-//        }
+            /*if(searchResult >= win){
+                return searchResult;
+            }*/
+            if(!stopSearch){
+                heuristic=searchResult;
+            }
+        }
 
-        return searchResult;
+        return heuristic;
     }
 
     private int search(Node state, int depth, int alpha, int beta){
+
         List<Edge> availableMoves = state.getBoard().getAvailableMoves();
         int turn = state.getPlayerNumber()==1? 2:1;
         int savedScore = (turn==this.playerNumber) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -103,6 +114,10 @@ public class  pcPlayer implements Player{
         //
         // If this is a terminal node or a win for either player, abort the search
         //
+        if(depth==0){
+           running=false;
+           return score;
+        }
         if (depth == 0 || (availableMoves.size() == 0)){ //|| (score >= winCutoff) || (score <= -winCutoff) || searchCutOff) {
             return score;
         }
@@ -121,6 +136,7 @@ public class  pcPlayer implements Player{
             return alpha;
 
         } else {
+
             for(Edge e:availableMoves){
                 Node child=new Node(state.getBoard().getNewBoard(e),this.playerNumber);
 
