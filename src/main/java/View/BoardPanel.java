@@ -9,7 +9,7 @@ import javax.swing.*;
 import Model.*;
 
 @SuppressWarnings("serial")
-public class LinesComponent extends JPanel {
+public class BoardPanel extends JPanel {
 	private static int n;
 	private static LinkedList<Line> lines = new LinkedList<>();
 	private LinkedList<Node> nodes = new LinkedList<>();
@@ -18,9 +18,9 @@ public class LinesComponent extends JPanel {
 	private volatile boolean nodesSelected;
 	private Edge edge;
 	
-	public LinesComponent(int n) {
+	public BoardPanel(int n) {
 		setLayout(new GridLayout(n, n));
-		LinesComponent.n = n;
+		BoardPanel.n = n;
 		nodesSelected = false;
 		for(int i = 0; i < n; i++) {
 	    	for(int j = 0; j < n; j++) {
@@ -159,15 +159,15 @@ public class LinesComponent extends JPanel {
 		private int y;
 		private static int width;
 		private static int height;
-		private LinesComponent lc;
+		private BoardPanel bp;
 		
-		public Node(int line, int column, LinesComponent lc) {
+		public Node(int line, int column, BoardPanel bp) {
 			this.line = line;
 			this.column = column;
 			radius = 10;
 			x = (int) ((column + 0.5) * (width / n)) - radius;
 			y = (int) ((line + 0.5) * (height / n)) - radius;
-			this.lc = lc;
+			this.bp = bp;
 			addMouseListener(this);
 		}
 		
@@ -197,7 +197,7 @@ public class LinesComponent extends JPanel {
 				nodeSelected1 = this;
 			} else {
 				nodeSelected2 = this;
-				lc.checkNodesSelected();
+				bp.checkNodesSelected();
 			}
 			repaint();
 		}

@@ -7,7 +7,7 @@ import Model.*;
 
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame {
-	private LinesComponent linesComp;
+	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
 
 	public GameWindow(int size, int ai) {
@@ -18,29 +18,29 @@ public class GameWindow extends JFrame {
 		JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
 		headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
 		
-		linesComp = new LinesComponent(size);
-		linesComp.setPreferredSize(new Dimension(600, 600));
+		boardPanel = new BoardPanel(size);
+		boardPanel.setPreferredSize(new Dimension(600, 600));
 
 		scorePanel = new ScorePanel(ai);
 
 		getContentPane().add(headerLabel, BorderLayout.PAGE_START);
-		getContentPane().add(linesComp, BorderLayout.CENTER);
+		getContentPane().add(boardPanel, BorderLayout.CENTER);
 		getContentPane().add(scorePanel, BorderLayout.PAGE_END);
 
 		setVisible(true);
 	}
 	
 	public void paintEdge(Edge edge) {
-		linesComp.paintEdge(edge);
+		boardPanel.paintEdge(edge);
 		return;
 	}
 	
 	public Edge getEdge() {
-		return linesComp.getEdge();
+		return boardPanel.getEdge();
 	}
 	
 	public boolean nodesSelected() {
-		return linesComp.nodesSelected();
+		return boardPanel.nodesSelected();
 	}
 	
 	public void setTurnText(int turn) {
