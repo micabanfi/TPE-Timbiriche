@@ -12,6 +12,8 @@ public class ScorePanel extends JPanel {
 	JLabel scoreP2;
 	JButton undoBtn;
 	int ai;
+	String player1;
+	String player2;
 	
 	public ScorePanel(int ai) {
 		this.ai = ai;
@@ -21,8 +23,6 @@ public class ScorePanel extends JPanel {
 		turnLabel.setFont(new Font("Dialog", Font.BOLD, 16));
 		add(turnLabel, BorderLayout.NORTH);
 		
-		String player1;
-		String player2;
 		scores = new JPanel(new GridLayout(2, 1));
 		scores.setPreferredSize(new Dimension(this.getWidth(), 50));
 		if(ai == 0) {
@@ -65,5 +65,13 @@ public class ScorePanel extends JPanel {
 			turnLabel.setText("AI " + turn + " turn");
 		}
 		return;
+	}
+	
+	public void setScoreTextP1(int score) {
+		scoreP1.setText(player1 + score);
+	}
+	
+	public void setScoreTextP2(int score) {
+		scoreP2.setText(player2 + score);
 	}
 }

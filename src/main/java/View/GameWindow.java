@@ -47,4 +47,12 @@ public class GameWindow extends JFrame {
 		scorePanel.setTurnText(turn);
 	}
 	
+	public void setScoreP1(int score) {
+		scorePanel.setScoreTextP1(score);
+	}
+	
+	public void setScoreP2(int score) {
+		scorePanel.setScoreTextP2(score);
+	}
+	
 }

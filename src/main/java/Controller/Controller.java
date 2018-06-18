@@ -30,10 +30,8 @@ public class Controller {
                 System.out.println("Ya elijio pc");
 
             }
-            
-            /*window.printP1(gameModel.getScoreP1());
-            window.printP2(gameModel.getScoreP2());
-*/
+            window.setScoreP1(gameModel.getScoreP1());
+            window.setScoreP2(gameModel.getScoreP2());
         }
         int rta = gameModel.over();
         //window.printScore(rta);
