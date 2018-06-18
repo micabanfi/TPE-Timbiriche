@@ -11,6 +11,7 @@ public class ScorePanel extends JPanel {
 	JPanel scores;
 	JLabel scoreP1;
 	JLabel scoreP2;
+	JPanel undoPanel;
 	JButton undoBtn;
 	int ai;
 	String player1;
@@ -46,13 +47,13 @@ public class ScorePanel extends JPanel {
 		add(scores, BorderLayout.CENTER);
 		
 		if(ai != 3) {
-			JPanel btnPanel = new JPanel();
+			undoPanel = new JPanel();
 			undoBtn = new JButton("Undo");
 			undoBtn.setFocusPainted(false);
 			UndoHandler handler = new UndoHandler();
 			undoBtn.addActionListener(handler);
-			btnPanel.add(undoBtn);
-			add(btnPanel, BorderLayout.SOUTH);
+			undoPanel.add(undoBtn);
+			add(undoPanel, BorderLayout.SOUTH);
 		}
 	}
 
@@ -105,6 +106,11 @@ public class ScorePanel extends JPanel {
 			bp.setUndo();
 		}
 		
+	}
+	
+	public void removeUndoBtn() {
+		undoPanel.remove(undoBtn);
+		return;
 	}
 	
 }

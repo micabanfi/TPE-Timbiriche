@@ -29,6 +29,10 @@ public class humanPlayer implements Player{
     public void incScore() {
         this.score++;
     }
+    
+    public void decScore() {
+        this.score--;
+    }
 
     public int getScore() {
         return score;

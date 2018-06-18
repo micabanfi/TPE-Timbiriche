@@ -15,7 +15,7 @@ public class Controller {
         while(!gameModel.isOver()){
         	window.setTurnText(gameModel.getTurn());
             if(gameModel.isHumanTurn()){
-                System.out.println("Turno jugador "+gameModel.getTurn());
+                //System.out.println("Turno jugador "+gameModel.getTurn());
                 
                 Edge edge = window.getEdge();
                 if(edge != null) {
@@ -24,7 +24,7 @@ public class Controller {
                 	gameModel.undo();
                 }
                 
-                System.out.println("Ya elijio humano");
+                //System.out.println("Ya elijio humano");
             }
             else{//le toca a la pc y va a retornar un EDGE
                 System.out.println("Turno Computadora "+gameModel.getTurn());

@@ -57,6 +57,7 @@ public class GameWindow extends JFrame {
 	
 	public void endGame(int winner) {
 		scorePanel.setEndGameText(winner);
+		scorePanel.removeUndoBtn();
 		this.remove(boardPanel);
 		repaint();
 		return;

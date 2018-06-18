@@ -2,30 +2,65 @@ package Model;
 
 public class Move {
 	private Edge edge;
-	private int player;
-	private boolean fillerMove;
+	private Player player;
+	private boolean fillerTop;
+	private boolean fillerBottom;
+	private boolean fillerLeft;
+	private boolean fillerRight;
 	
-	public Move(Edge edge, int player) {
+	public Move(Edge edge, Player player) {
 		this.edge = edge;
 		this.player = player;
 	}
-
-	public boolean isFillerMove() {
-		return fillerMove;
-	}
-
-	public void setFillerMove(boolean fillerMove) {
-		this.fillerMove = fillerMove;
+	
+	public boolean isFiller() {
+		if(edge.isHorizontal()) {
+			return fillerTop || fillerBottom;
+		} else {
+			return fillerLeft || fillerRight;
+		}
 	}
 
 	public Edge getEdge() {
 		return edge;
 	}
 
-	public int getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
 	
+	public boolean isFillerTop() {
+		return fillerTop;
+	}
+
+	public void setFillerTop(boolean fillerTop) {
+		this.fillerTop = fillerTop;
+	}
+
+	public boolean isFillerBottom() {
+		return fillerBottom;
+	}
+
+	public void setFillerBottom(boolean fillerBottom) {
+		this.fillerBottom = fillerBottom;
+	}
+
+	public boolean isFillerLeft() {
+		return fillerLeft;
+	}
+
+	public void setFillerLeft(boolean fillerLeft) {
+		this.fillerLeft = fillerLeft;
+	}
+
+	public boolean isFillerRight() {
+		return fillerRight;
+	}
+
+	public void setFillerRight(boolean fillerRight) {
+		this.fillerRight = fillerRight;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
