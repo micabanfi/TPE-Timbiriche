@@ -107,6 +107,7 @@ public class Board {
             }
         }
         edgesLeft--;
+        //System.out.println("Faltan:"+edgesLeft);
         return player.getPlayerNumber()==1?2:1;//no hizo punto,retorna numero del otro jugador
 
     }

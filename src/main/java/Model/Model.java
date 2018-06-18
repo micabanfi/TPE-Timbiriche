@@ -2,6 +2,7 @@ package Model;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Model {
     private Board board;
@@ -12,7 +13,7 @@ public class Model {
     private int param;
     private Boolean prune;
     private int turn;
-    private Queue<Edge> undo;
+    private Stack<Edge> undo;
 
     public void printModelInfo(){
         System.out.println("Board N:"+board.getN());
@@ -24,7 +25,7 @@ public class Model {
     }
 
     public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException{
-        this.undo=new LinkedList<>();
+        this.undo=new Stack<>();
         this.board=new Board(n);
         switch(role){
             case 0:
@@ -96,7 +97,6 @@ public class Model {
 
     public Edge play() {
     	if(turn==1) {
-
     		return p1.play(board,mode,param);
     	} else {
     		return p2.play(board,mode,param);
