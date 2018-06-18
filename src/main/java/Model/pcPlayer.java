@@ -9,6 +9,8 @@ public class  pcPlayer implements Player{
     private int playerNumber;
     private static Boolean stopSearch=false;
     private static Boolean running=true;
+    private static final int winCutoff = 500000;
+
 
 
 
@@ -36,45 +38,41 @@ public class  pcPlayer implements Player{
     //aca va la IA
     public Edge play(Object... arguments){
         Board board= (Board) arguments[0];
+        Board aux=board.clone();
         Boolean model= (Boolean) arguments[1];
         int depth= (int) arguments[2];
         Edge bestMove=null;
         Integer bestHeuristic=Integer.MIN_VALUE;
         int nodeHeuristic;
         //hago solo como si fuese depth, por ahora paso model al pedo
-
         List<Edge> availableMoves=board.getAvailableMoves();
-
         //hay que ver como cortar aca
-        for(Edge e:availableMoves){
-
-            Node child=new Node(board.getNewBoard(e),this.playerNumber);
-
+        if(availableMoves!=null) {
+            for (Edge e : availableMoves) {
+                Node child = new Node(aux, this.playerNumber);
 //                if(model)//time
 //                    limit=param/availableMoves.size();
 //                else
 //                    limit=param;
 //
-                if(depth>1){
-
-                    nodeHeuristic=ids(child,model,depth-1);
-
+                if (depth > 1) {
+                    nodeHeuristic = ids(child, model, depth - 1);
+                } else {
+                    nodeHeuristic = child.getHeuristic(this.playerNumber);
                 }
 
-
-                else{
-                    nodeHeuristic=child.getHeuristic(this.playerNumber);
-
-                }
-
-                if(nodeHeuristic>bestHeuristic){
-                    bestHeuristic=nodeHeuristic;
-                    bestMove=e;
+                if (nodeHeuristic > bestHeuristic) {
+                    bestHeuristic = nodeHeuristic;
+                    bestMove = e;
                 }
                 //caso que sea igual hay que hacer random no se como
             }
-
-            return bestMove;
+        }
+        //System.out.println("Computer EDGE:"+bestMove.iPosition()+"-"+bestMove.jPosition()+"-"+bestMove.isHorizontal());
+        if(bestMove==null){
+            System.out.println("ES NULL");
+        }
+        return bestMove;
     }
 
     private int ids(Node state,Boolean model,int depth){
@@ -91,12 +89,13 @@ public class  pcPlayer implements Player{
             //if (currentTime <= endTime) {}
             int searchResult=search(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-            /*if(searchResult >= win){
+            if(searchResult >= winCutoff){
                 return searchResult;
-            }*/
+            }
             if(!stopSearch){
                 heuristic=searchResult;
             }
+            //depth++;
         }
 
         return heuristic;

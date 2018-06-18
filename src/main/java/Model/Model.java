@@ -98,7 +98,8 @@ public class Model {
     		return p1.play(board,mode,param);
     	} else {
     		return p2.play(board,mode,param);
-    	}
+
+        }
     }
 
     public void addMove(Edge edge) {//1 si gano 1,2 si gano 2,3 si empate

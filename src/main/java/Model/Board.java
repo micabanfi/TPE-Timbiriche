@@ -11,6 +11,15 @@ public class Board {
     private int edgesLeft;
     private int p1Score, p2Score;
 
+    public Board(Board b){
+        this.hEdges=new int [n][n-1];
+        this.hEdges=b.hEdges;
+        this.vEdges=b.vEdges;
+        this.boxes=b.boxes;
+        this.edgesLeft=b.edgesLeft;
+        this.p1Score=b.p1Score;
+        this.p2Score=b.p2Score;
+    }
 
 
     public Board(int n) {
@@ -184,7 +193,7 @@ public class Board {
         cloned.p1Score = p1Score;
         cloned.p2Score = p2Score;
 
-        return cloned;
+        return new Board(cloned);
     }
 
     public Board getNewBoard(Edge edge){
