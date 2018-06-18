@@ -3,10 +3,8 @@ package View;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
-
 import javax.swing.*;
-
-import Model.*;
+import Model.Edge;
 
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
@@ -16,6 +14,7 @@ public class BoardPanel extends JPanel {
 	private static Node nodeSelected1;
 	private static Node nodeSelected2;
 	private volatile boolean nodesSelected;
+	private volatile boolean undo;
 	private Edge edge;
 	
 	public BoardPanel(int n) {
@@ -69,7 +68,13 @@ public class BoardPanel extends JPanel {
 	// Returns Edge chosen by Human Player
 	public Edge getEdge() {
 		while(!nodesSelected) {
-			
+			if(undo) {
+				if(!lines.isEmpty()) {
+					undoLine();
+				}				
+				undo = false;
+				return null;
+			}
 		}
 		nodesSelected = false;
 		return edge;
@@ -85,6 +90,7 @@ public class BoardPanel extends JPanel {
 		} else {
 			addLine(getNode(i, j), getNode(i + 1, j));
 		}
+		// ESPERAR 2 SEGUNDOS
 		return;
 	}
 	
@@ -110,8 +116,13 @@ public class BoardPanel extends JPanel {
 		return;
 	}
 	
+	public void setUndo() {
+		undo = true;
+	}
+	
 	public void undoLine() {
 	    lines.removeLast();
+	    resetSelectedNodes();
 	    repaint();
 	    return;
 	}

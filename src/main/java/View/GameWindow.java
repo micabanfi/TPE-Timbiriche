@@ -21,7 +21,7 @@ public class GameWindow extends JFrame {
 		boardPanel = new BoardPanel(size);
 		boardPanel.setPreferredSize(new Dimension(600, 600));
 
-		scorePanel = new ScorePanel(ai);
+		scorePanel = new ScorePanel(boardPanel, ai);
 
 		getContentPane().add(headerLabel, BorderLayout.PAGE_START);
 		getContentPane().add(boardPanel, BorderLayout.CENTER);

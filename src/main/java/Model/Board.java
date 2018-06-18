@@ -14,7 +14,7 @@ public class Board {
 
 
     public Board(int n){
-        this.n=n;
+        Board.n=n;
         this.hEdges=new int[n][n-1];
         this.vEdges=new int[n-1][n];
         this.boxes=new int[n-1][n-1];
@@ -24,7 +24,8 @@ public class Board {
     }
 
 
-    public int makeMove(Edge edge,Player player){
+    public int makeMove(Move move, Player player){
+    	Edge edge = move.getEdge();
         //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
         int i=edge.iPosition();
         int j=edge.jPosition();
@@ -197,7 +198,55 @@ public class Board {
             vEdges[edge.iPosition()][edge.jPosition()]=1;
         return aux;
     }
-
-
-
+    
+    public void undoBoard(Edge edge, int turn) {
+    	int moveScore = 0;
+    	int i = edge.iPosition();
+    	int j = edge.jPosition();
+    	if(edge.isHorizontal()) {
+    		if(i != 0) {
+    			// chequear el de arriba
+    			if((hEdges[i-1][j] == 1) && (vEdges[i-1][j] == 1) &&(vEdges[i-1][j+1] == 1)) {
+    				boxes[i-1][j] = 0;
+    				moveScore++;
+    			}
+    		}
+    		if(i != (n - 1)) {
+    			// chequear el de abajo
+    			if((hEdges[i+1][j] == 1) && (vEdges[i][j] == 1) && (vEdges[i][j+1] == 1)) {
+    				boxes[i][j] = 0;
+    				moveScore++;
+    			}
+    		}
+    		hEdges[i][j] = 0;
+    	} else {
+    		if(j != 0) {
+    			// chequear el de izq
+    			if((vEdges[i][j-1] == 1) && (hEdges[i][j-1] == 1) && (hEdges[i+1][j-1] == 1)) {
+    				boxes[i][j-1] = 0;
+    				moveScore++;
+    			}
+    		}
+    		if(j != (n - 1)) {
+    			// chequear el de der
+    			if((vEdges[i][j+1] == 1) && (hEdges[i][j] == 1) && (hEdges[i+1][j] == 1)) {
+    				boxes[i][j] = 0;
+    				moveScore++;
+    			}
+    		}    		
+    		vEdges[i][j] = 0;
+    	}
+    	edgesLeft++;
+    	if(turn == 1) {
+    		p1Score -= moveScore;
+    	} else {
+    		p2Score -= moveScore;
+    	}
+    	return;
+    }
+    
+    public boolean empty() {
+    	return edgesLeft == 2*n*(n-1);
+    }
+    
 }

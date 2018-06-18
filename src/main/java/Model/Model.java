@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Model {
     private Board board;
@@ -12,7 +12,7 @@ public class Model {
     private int param;
     private Boolean prune;
     private int turn;
-    private Queue<Edge> undo;
+    private Stack<Move> undo;
 
     public void printModelInfo(){
         System.out.println("Board N:"+board.getN());
@@ -24,7 +24,7 @@ public class Model {
     }
 
     public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException{
-        this.undo=new LinkedList<>();
+        this.undo=new Stack<>();
         this.board=new Board(n);
         switch(role){
             case 0:
@@ -96,7 +96,6 @@ public class Model {
 
     public Edge play() {
     	if(turn==1) {
-
     		return p1.play(board,mode,param);
     	} else {
     		return p2.play(board,mode,param);
@@ -104,14 +103,17 @@ public class Model {
     }
 
     public void addMove(Edge edge) {//1 si gano 1,2 si gano 2,3 si empate
-        undo.add(edge);
-        if(turn == 1) {
-            turn = board.makeMove(edge, p1);//deberia devolver a quien le toca seguir jugando
-        }
-        else {
-            turn = board.makeMove(edge,p2);
-        }
-        return;
+    	Move move = new Move(edge, turn);
+    	if(!undo.contains(move)) {
+    		undo.push(move);
+            if(turn == 1) {
+                turn = board.makeMove(move, p1);//deberia devolver a quien le toca seguir jugando
+            }
+            else {
+                turn = board.makeMove(move,p2);
+            }
+    	}
+    	return;
     }
 
     public int getTurn(){
@@ -131,6 +133,26 @@ public class Model {
             return p1 instanceof humanPlayer;
         }
         return p2 instanceof humanPlayer;
+    }
+    
+    public void undo() { // Funciona si es el turno de una persona
+    	if(!board.empty()) {
+    		Edge edge;
+        	if(role == 1 || role == 2) {
+        		edge = undo.pop();
+        		board.undoBoard(edge, 2);
+        	}
+        	if(role == 0) {
+        		if(turn == 1) {
+            		turn = 2;
+            	} else {
+            		turn = 1;
+            	}
+        	}
+        	edge = undo.pop();
+        	board.undoBoard(edge, turn);
+    	}
+    	return;
     }
 
   /*  //retorna 1 si gana p1,2 si gana p2, 3 si es empate

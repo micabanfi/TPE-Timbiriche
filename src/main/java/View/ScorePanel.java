@@ -6,6 +6,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
+	BoardPanel bp;
 	JLabel turnLabel;
 	JPanel scores;
 	JLabel scoreP1;
@@ -15,7 +16,8 @@ public class ScorePanel extends JPanel {
 	String player1;
 	String player2;
 	
-	public ScorePanel(int ai) {
+	public ScorePanel(BoardPanel bp, int ai) {
+		this.bp = bp;
 		this.ai = ai;
 		setLayout(new BorderLayout(0, 10));
 		
@@ -47,6 +49,8 @@ public class ScorePanel extends JPanel {
 			JPanel btnPanel = new JPanel();
 			undoBtn = new JButton("Undo");
 			undoBtn.setFocusPainted(false);
+			UndoHandler handler = new UndoHandler();
+			undoBtn.addActionListener(handler);
 			btnPanel.add(undoBtn);
 			add(btnPanel, BorderLayout.SOUTH);
 		}
@@ -92,6 +96,15 @@ public class ScorePanel extends JPanel {
 			turnLabel.setText("It's a draw!");
 		}
 		return;
+	}
+	
+	private class UndoHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			bp.setUndo();
+		}
+		
 	}
 	
 }
