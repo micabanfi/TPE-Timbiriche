@@ -3,6 +3,8 @@ package View;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 import Model.Edge;
 
@@ -89,6 +91,12 @@ public class BoardPanel extends JPanel {
 	
 	// Paints the Edge chosen by AI
 	public void paintEdge(Edge edge) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		int i = edge.iPosition();
 		int j = edge.jPosition();
 		
@@ -97,7 +105,6 @@ public class BoardPanel extends JPanel {
 		} else {
 			addLine(getNode(i, j), getNode(i + 1, j));
 		}
-		// ESPERAR 2 SEGUNDOS
 		return;
 	}
 	

@@ -9,11 +9,14 @@ import Model.*;
 public class GameWindow extends JFrame {
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
+	private int ai;
 
 	public GameWindow(int size, int ai) {
 		setTitle("Timbiriche");
 		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.ai = ai;
 
 		JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
 		headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
@@ -57,7 +60,9 @@ public class GameWindow extends JFrame {
 	
 	public void endGame(int winner) {
 		scorePanel.setEndGameText(winner);
-		scorePanel.removeUndoBtn();
+		if(this.ai != 3) {
+			scorePanel.removeUndoBtn();
+		}		
 		this.remove(boardPanel);
 		repaint();
 		return;
