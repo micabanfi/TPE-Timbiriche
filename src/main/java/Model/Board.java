@@ -196,12 +196,13 @@ public class Board {
         return new Board(cloned);
     }
 
-    public Board getNewBoard(Edge edge){
+    public Board getNewBoard(Move move){
         Board aux=this.clone();
-        if(edge.isHorizontal())
-            hEdges[edge.iPosition()][edge.jPosition()]=1;
-        else
-            vEdges[edge.iPosition()][edge.jPosition()]=1;
+//        if(edge.isHorizontal())
+//            hEdges[edge.iPosition()][edge.jPosition()]=1;
+//        else
+//            vEdges[edge.iPosition()][edge.jPosition()]=1;
+        aux.makeMove(move);
         return aux;
     }
     

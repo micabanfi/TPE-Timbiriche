@@ -32,18 +32,19 @@ public class Model {
                 this.turn = 1;
                 break;
             case 1:
-                this.p1=new pcPlayer(1);
                 this.p2=new humanPlayer(2);
+                this.p1=new pcPlayer(1,p2);
                 this.turn = 2;
                 break;
             case 2:
                 this.p1=new humanPlayer(1);
-                this.p2=new pcPlayer(2);
+                this.p2=new pcPlayer(2,p1);
                 this.turn = 1;
                 break;
             case 3:
                 this.p1=new pcPlayer(1);
                 this.p2=new pcPlayer(2);
+                //ALERT
                 this.turn = 1;
                 break;
             default:

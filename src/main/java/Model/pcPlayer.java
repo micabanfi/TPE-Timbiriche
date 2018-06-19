@@ -1,21 +1,29 @@
 package Model;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class  pcPlayer implements Player{
     private int score;
     private int playerNumber;
     private static Boolean stopSearch=false;
     private static Boolean running=true;
-    private static final int winCutoff = 500000;
-
-
+    private static int winCutoff=-1;
+    private Player oponent;
 
 
     public pcPlayer(int playerNumber){
         this.playerNumber=playerNumber;
+        this.oponent=null;
+    }
+
+    public pcPlayer(int playerNumber,Player oponent){
+        this.playerNumber=playerNumber;
+        this.oponent=oponent;
+    }
+
+
+    public void setOponent(Player oponent) {
+        this.oponent = oponent;
     }
 
     public int getPlayerNumber(){
@@ -38,12 +46,15 @@ public class  pcPlayer implements Player{
     //aca va la IA
     public Edge play(Object... arguments){
         Board board= (Board) arguments[0];
+        if(winCutoff==-1)
+            winCutoff= (int) Math.pow(board.getN()-1,2);
         Board aux=board.clone();
         Boolean model= (Boolean) arguments[1];
         int depth= (int) arguments[2];
         Edge bestMove=null;
         Integer bestHeuristic=Integer.MIN_VALUE;
         int nodeHeuristic;
+        Set<Edge> auxShuffle=new HashSet<>();
         //hago solo como si fuese depth, por ahora paso model al pedo
         List<Edge> availableMoves=board.getAvailableMoves();
         //hay que ver como cortar aca
@@ -62,8 +73,14 @@ public class  pcPlayer implements Player{
                 }
 
                 if (nodeHeuristic > bestHeuristic) {
+                    auxShuffle=null;
                     bestHeuristic = nodeHeuristic;
                     bestMove = e;
+                }
+                else if (nodeHeuristic == bestHeuristic){
+                    if(auxShuffle==null)
+                        auxShuffle= new HashSet<>();
+                    auxShuffle.add(e);
                 }
                 //caso que sea igual hay que hacer random no se como
             }
@@ -71,6 +88,17 @@ public class  pcPlayer implements Player{
         //System.out.println("Computer EDGE:"+bestMove.iPosition()+"-"+bestMove.jPosition()+"-"+bestMove.isHorizontal());
         if(bestMove==null){
             System.out.println("ES NULL");
+        }
+        if(auxShuffle!=null){
+            int size = auxShuffle.size();
+            int item = new Random().nextInt(size);
+            int i = 0;
+            for(Edge edge : auxShuffle)
+            {
+                if (i == item)
+                    return edge;
+                i++;
+            }
         }
         return bestMove;
     }
@@ -117,18 +145,18 @@ public class  pcPlayer implements Player{
         //
         // If this is a terminal node or a win for either player, abort the search
         //
-        if(depth==0){
+        if(depth==0 || availableMoves.size() == 0 || stopSearch){
            running=false;
            return score;
         }
-        if (depth == 0 || (availableMoves.size() == 0)){ //|| (score >= winCutoff) || (score <= -winCutoff) || searchCutOff) {
-            return score;
-        }
+//        if (depth == 0 || ()){ //|| (score >= winCutoff) || (score <= -winCutoff) || searchCutOff) {
+//            return score;
+//        }
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
 
-                Node child=new Node(state.getBoard().getNewBoard(e),this.playerNumber);
+                Node child=new Node(state.getBoard().getNewBoard(new Move(e,oponent)),this.playerNumber);
 
                 alpha = Math.max(alpha, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
 
@@ -141,7 +169,7 @@ public class  pcPlayer implements Player{
         } else {
 
             for(Edge e:availableMoves){
-                Node child=new Node(state.getBoard().getNewBoard(e),this.playerNumber);
+                Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber);
 
                 beta = Math.min(beta, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
 
