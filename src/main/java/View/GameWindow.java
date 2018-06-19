@@ -21,7 +21,7 @@ public class GameWindow extends JFrame {
 		JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
 		headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
 		
-		boardPanel = new BoardPanel(size);
+		boardPanel = new BoardPanel(size, ai);
 		boardPanel.setPreferredSize(new Dimension(600, 600));
 
 		scorePanel = new ScorePanel(boardPanel, ai);

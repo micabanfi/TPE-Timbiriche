@@ -11,6 +11,7 @@ import Model.Edge;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 	private static int n;
+	private static int ai;
 	private static LinkedList<Line> lines = new LinkedList<>();
 	private LinkedList<Node> nodes = new LinkedList<>();
 	private static Node nodeSelected1;
@@ -20,9 +21,10 @@ public class BoardPanel extends JPanel {
 	private LinkedList<Edge> edges = new LinkedList<>();
 	private Edge edge;
 	
-	public BoardPanel(int n) {
+	public BoardPanel(int n, int ai) {
 		setLayout(new GridLayout(n, n));
 		BoardPanel.n = n;
+		BoardPanel.ai = ai;
 		nodesSelected = false;
 		for(int i = 0; i < n; i++) {
 	    	for(int j = 0; j < n; j++) {
@@ -92,7 +94,7 @@ public class BoardPanel extends JPanel {
 	// Paints the Edge chosen by AI
 	public void paintEdge(Edge edge) {
 		try {
-			TimeUnit.MILLISECONDS.sleep(500);
+			TimeUnit.MILLISECONDS.sleep(400);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -193,7 +195,9 @@ public class BoardPanel extends JPanel {
 			x = (int) ((column + 0.5) * (width / n)) - radius;
 			y = (int) ((line + 0.5) * (height / n)) - radius;
 			this.bp = bp;
-			addMouseListener(this);
+			if(BoardPanel.ai != 3) {
+				addMouseListener(this);
+			}			
 		}
 		
 		@Override
