@@ -230,10 +230,17 @@ public class BoardPanel extends JPanel {
 					} else {
 						nodeSelected2 = this;
 						bp.checkNodesSelected();
-					}
-					repaint();
+					}					
+				}
+			} else {
+				if(nodeSelected1 == null) {
+					nodeSelected1 = this;
+				} else {
+					nodeSelected2 = this;
+					bp.checkNodesSelected();
 				}
 			}
+			repaint();
 			return;
 		}
 
