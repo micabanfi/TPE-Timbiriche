@@ -76,14 +76,22 @@ public class BoardPanel extends JPanel {
 		return (col1 < col2)? col1 : col2;
 	}
 	
+	// Undos the number of moves passed as argument
+	public void undoLines(int qty) {
+		while(qty > 0) {
+			edges.removeLast();
+			lines.removeLast();
+			qty--;
+		}
+		resetSelectedNodes();
+		repaint();
+		return;
+	}
+	
 	// Returns Edge chosen by Human Player
 	public Edge getEdge() {
 		while(!nodesSelected) {
-			if(undo) {
-				if(!lines.isEmpty()) {
-					edges.removeLast();
-					undoLine();
-				}				
+			if(undo) {			
 				undo = false;
 				return null;
 			}
@@ -99,6 +107,8 @@ public class BoardPanel extends JPanel {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		edges.add(edge);
 		
 		int i = edge.iPosition();
 		int j = edge.jPosition();
@@ -137,11 +147,8 @@ public class BoardPanel extends JPanel {
 		undo = true;
 	}
 	
-	public void undoLine() {
-	    lines.removeLast();
-	    resetSelectedNodes();
-	    repaint();
-	    return;
+	public void setTurn(int turn) {
+		BoardPanel.turn = turn;
 	}
 	
 	public boolean nodesSelected() {
@@ -256,10 +263,6 @@ public class BoardPanel extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent e) {}
 		
-	}
-	
-	public void setTurn(int turn) {
-		BoardPanel.turn = turn;
 	}
 
 }

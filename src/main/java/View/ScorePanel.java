@@ -112,21 +112,17 @@ public class ScorePanel extends JPanel {
 	}
 	
 	private class UndoHandler implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			bp.setUndo();
 		}
-		
 	}
 	
 	private class DotHandler implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			
 		}
-		
 	}
 	
 }

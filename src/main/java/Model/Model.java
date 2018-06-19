@@ -131,23 +131,28 @@ public class Model {
         return p2 instanceof humanPlayer;
     }
     
-    public void undo() {
+    public int undo() {
+    	int undoMoves = 0;
     	if(!moves.isEmpty()) {
     		Move move;
         	if(((role == 1 && moves.size() != 1) || role == 2) && (turn == 1)) {
         		if(moves.peek().getPlayer().getPlayerNumber() == 2) {
 	        		move = moves.pop();
 	    			board.undoBoard(move, move.getPlayer());
+	    			undoMoves++;
 	    			while(moves.peek().getPlayer().getPlayerNumber() == 2) {
 	    				move = moves.pop();
 	        			board.undoBoard(move, move.getPlayer());
+	        			undoMoves++;
 	    			}
         		}
         		move = moves.pop();
     			board.undoBoard(move, move.getPlayer());
+    			undoMoves++;
         	} else if((role == 0)) {
         		move = moves.pop();
     			board.undoBoard(move, move.getPlayer());
+    			undoMoves++;
     			if(!move.isFiller()) {
     				if(turn == 1) {
                 		turn = 2;
@@ -157,7 +162,7 @@ public class Model {
     			}
         	}
     	}
-    	return;
+    	return undoMoves;
     }
 
   /*  //retorna 1 si gana p1,2 si gana p2, 3 si es empate

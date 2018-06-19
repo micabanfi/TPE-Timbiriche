@@ -59,6 +59,11 @@ public class GameWindow extends JFrame {
 		scorePanel.setScoreTextP2(score);
 	}
 	
+	public void undoMoves(int qty) {
+		boardPanel.undoLines(qty);
+		return;
+	}
+	
 	public void endGame(int winner) {
 		scorePanel.setEndGameText(winner);
 		if(this.ai != 3) {
