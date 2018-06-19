@@ -40,7 +40,6 @@ public class BoardPanel extends JPanel {
 			if (nodeSelected1 != nodeSelected2) {
 				if (nodeSelected1.getLine() == nodeSelected2.getLine()) {
 					if (Math.abs(nodeSelected1.getColumn() - nodeSelected2.getColumn()) == 1) {
-						//System.out.println("edge:" + nodeSelected1.getLine() + minColumn() + true);
 						edge = new Edge(nodeSelected1.getLine(), minColumn(), true);
 						if(!edges.contains(edge)) {
 							edges.add(edge);
@@ -50,7 +49,6 @@ public class BoardPanel extends JPanel {
 					}
 				} else if (nodeSelected1.getColumn() == nodeSelected2.getColumn()) {
 					if (Math.abs(nodeSelected1.getLine() - nodeSelected2.getLine()) == 1) {
-						//System.out.println("EDGE:" + minLine() + nodeSelected1.getColumn() + false);
 						edge = new Edge(minLine(), nodeSelected1.getColumn(), false);
 						if(!edges.contains(edge)) {
 							edges.add(edge);
@@ -103,7 +101,8 @@ public class BoardPanel extends JPanel {
 	// Paints the Edge chosen by AI
 	public void paintEdge(Edge edge) {
 		try {
-			TimeUnit.MILLISECONDS.sleep(400);
+			// AI delay
+			TimeUnit.MILLISECONDS.sleep(600);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

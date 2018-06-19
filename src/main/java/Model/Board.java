@@ -32,14 +32,14 @@ public class Board {
         this.p2Score = 0;
     }
 
-
+    // Returns number of player who moves next
     public int makeMove(Move move) {
     	Edge edge = move.getEdge();
     	Player player = move.getPlayer();
-        //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
         Boolean someoneScored = false;
         int i = edge.iPosition();
         int j = edge.jPosition();
+        
         if(edge.isHorizontal()) {
             hEdges[i][j] = 1;
             // Check if top square is filled
@@ -121,10 +121,10 @@ public class Board {
     public int fakeMove(Move move) {
         Edge edge = move.getEdge();
         Player player = move.getPlayer();
-        //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
         Boolean someoneScored = false;
         int i = edge.iPosition();
         int j = edge.jPosition();
+        
         if(edge.isHorizontal()) {
             hEdges[i][j] = 1;
             // Check if top square is filled

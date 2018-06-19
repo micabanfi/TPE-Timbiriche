@@ -23,9 +23,14 @@ public class Model {
     }
 
     public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException{
-        this.moves=new Stack<>();
-        this.board=new Board(n);
-        switch(role){
+        
+        if(n < 3) {
+        	throw new IllegalArgumentException("Size parameter must be greater than 2");
+        } else {
+        	this.board=new Board(n);
+        }
+        
+        switch(role) {
             case 0:
                 this.p1=new humanPlayer(1);
                 this.p2=new humanPlayer(2);
@@ -51,7 +56,8 @@ public class Model {
                 throw new IllegalArgumentException();
         }
         this.role=role;
-        switch(mode){
+        
+        switch(mode) {
             case "time":
                 this.mode=true;
                 break;
@@ -61,11 +67,13 @@ public class Model {
             default:
                 throw new IllegalArgumentException();
         }
-        if(param<=0)
+        
+        if(param <= 0)
             throw new IllegalArgumentException();
         else
             this.param=param;
-        switch(prune){
+        
+        switch(prune) {
             case "on":
                 this.prune=true;
                 break;
@@ -75,57 +83,57 @@ public class Model {
             default:
                 throw new IllegalArgumentException();
         }
+        
+        this.moves=new Stack<>();
     }
 
-    public boolean isOver(){//0 isOver,1 gana 1,2 gana 2,3 empate
+    public boolean isOver() {
        return board.isOver();
     }
-
+    
+    // Returns 1 if P1 won, 2 if P2 won or 3 if draw
     public int over() {
-        if(p1.getScore() > p2.getScore()) {//gana 1
+        if(p1.getScore() > p2.getScore()) {
             return 1;
-        }
-        else if(p2.getScore() > p1.getScore()) {//gana 2
+        } else if(p2.getScore() > p1.getScore()) {
             return 2;
-        }
-        else {//empate
+        } else {
            return 3;
         }
     }
 
 
     public Edge play() {
-    	if(turn==1) {
+    	if(turn == 1) {
     		return p1.play(board,mode,param);
     	} else {
     		return p2.play(board,mode,param);
-
         }
     }
 
-    public void addMove(Edge edge) {//1 si gano 1,2 si gano 2,3 si empate
+    public void addMove(Edge edge) {
     	Move move = new Move(edge, (turn == 1)? p1 : p2);
     	if(!moves.contains(move)) {
     		moves.push(move);
-            turn = board.makeMove(move);//deberia devolver a quien le toca seguir jugando
+            turn = board.makeMove(move);
     	}
     	return;
     }
 
-    public int getTurn(){
+    public int getTurn() {
         return turn;
     }
 
-    public int getScoreP1(){
+    public int getScoreP1() {
         return p1.getScore();
     }
 
-    public int getScoreP2(){
+    public int getScoreP2() {
         return p2.getScore();
     }
     
-    public boolean isHumanTurn(){
-        if(turn==1){
+    public boolean isHumanTurn() {
+        if(turn==1) {
             return p1 instanceof humanPlayer;
         }
         return p2 instanceof humanPlayer;
@@ -164,29 +172,5 @@ public class Model {
     	}
     	return undoMoves;
     }
-
-  /*  //retorna 1 si gana p1,2 si gana p2, 3 si es empate
-    public int play(){
-        int turn=1;
-        while(!board.isOver()){
-            if(turn==1){
-                p1.play();
-                turn=2;
-            }
-            else{
-                p2.play();
-                turn=1;
-            }
-        }
-        if(p1.getScore()>p2.getScore()){//gana 1
-            return 1;
-        }
-        else if(p2.getScore()>p1.getScore()){//gana 2
-            return 2;
-        }
-        else{//empate
-            return 3;
-        }
-    }*/
 
 }
