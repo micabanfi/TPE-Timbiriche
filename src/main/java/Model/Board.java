@@ -118,6 +118,87 @@ public class Board {
         return (player.getPlayerNumber() == 1)? 2 : 1;
     }
 
+    public int fakeMove(Move move) {
+        Edge edge = move.getEdge();
+        Player player = move.getPlayer();
+        //System.out.println("Make move:"+edge.iPosition()+edge.jPosition());
+        Boolean someoneScored = false;
+        int i = edge.iPosition();
+        int j = edge.jPosition();
+        if(edge.isHorizontal()) {
+            hEdges[i][j] = 1;
+            // Check if top square is filled
+            if(i != 0) {
+                if(hEdges[i-1][j] == 1) {
+                    if((vEdges[i-1][j] == 1) && (vEdges[i-1][j+1] == 1)) {
+                        boxes[i-1][j] = player.getPlayerNumber();
+                        if(player.getPlayerNumber() == 1) {
+                            p1Score++;
+                        }
+                        else {
+                            p2Score++;
+                        }
+                        move.setFillerTop(true);
+                        someoneScored=true;
+                    }
+                }
+            }
+            // Check if bottom square is filled
+            if(i != (n - 1)) {
+                if(hEdges[i+1][j] == 1) {
+                    if((vEdges[i][j] == 1) && (vEdges[i][j+1] == 1)) {
+                        boxes[i][j] = player.getPlayerNumber();
+                        if(player.getPlayerNumber() == 1) {
+                            p1Score++;
+                        } else {
+                            p2Score++;
+                        }
+                        move.setFillerBottom(true);
+                        someoneScored=true;
+                    }
+                }
+            }
+        } else {
+            vEdges[i][j] = 1;
+            // Check if left square is filled
+            if(j != 0) {
+                if(vEdges[i][j-1] == 1) {
+                    if((hEdges[i][j-1] == 1) && (hEdges[i+1][j-1] == 1)) {
+                        boxes[i][j-1] = player.getPlayerNumber();
+                        if(player.getPlayerNumber() == 1) {
+                            p1Score++;
+                        } else {
+                            p2Score++;
+                        }
+                        move.setFillerLeft(true);
+                        someoneScored = true;
+                    }
+                }
+            }
+            // Check if right square is filled
+            if(j != n-1){
+                if(vEdges[i][j+1] == 1){
+                    if((hEdges[i][j] == 1) && (hEdges[i+1][j] == 1)) {
+                        boxes[i][j] = player.getPlayerNumber();
+                        if(player.getPlayerNumber() == 1) {
+                            p1Score++;
+                        } else {
+                            p2Score++;
+                        }
+                        move.setFillerRight(true);
+                        someoneScored = true;
+                    }
+                }
+            }
+        }
+        edgesLeft--;
+
+        // Set next turn player
+        if(someoneScored)
+            return (player.getPlayerNumber() == 1)? 1 : 2;
+        return (player.getPlayerNumber() == 1)? 2 : 1;
+    }
+
     public boolean isOver() {
         return edgesLeft == 0;
     }
@@ -126,31 +207,32 @@ public class Board {
         return n;
     }
 
-//    public void printBoard(Player p1,Player p2){
-//        System.out.println("Print boxes:");
-//        for(int i = 0; i < n-1; i++) {
-//            for(int j = 0; j < n-1; j++) {
-//                System.out.print(boxes[i][j] + " ");
-//            }
-//            System.out.print('\n');
-//        }
-//        System.out.println("Print horizontal:");
-//        for(int i = 0; i < n; i++) {
-//            for(int j = 0; j < n-1; j++) {
-//                System.out.print(hEdges[i][j] + " ");
-//            }
-//            System.out.print('\n');
-//        }
-//        System.out.println("Print vertical:");
-//        for(int i = 0; i < n-1; i++) {
-//            for(int j = 0; j < n; j++) {
-//                System.out.print(vEdges[i][j] + " ");
-//            }
-//            System.out.print('\n');
-//        }
-//
-//        System.out.println("Player 1: "+p1.getScore()+" Player 2: "+p2.getScore());
-//    }
+    public void printBoard(){
+        System.out.println("************************************");
+        System.out.println("Print boxes:");
+        for(int i = 0; i < n-1; i++) {
+            for(int j = 0; j < n-1; j++) {
+                System.out.print(boxes[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+        System.out.println("************************************");
+        System.out.println("Print horizontal:");
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n-1; j++) {
+                System.out.print(hEdges[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+        System.out.println("Print vertical:");
+        for(int i = 0; i < n-1; i++) {
+            for(int j = 0; j < n; j++) {
+                System.out.print(vEdges[i][j] + " ");
+            }
+            System.out.print('\n');
+        }
+
+    }
 
     public int getHeuristic(int playerNumber){
         if(playerNumber==1)
@@ -198,11 +280,13 @@ public class Board {
 
     public Board getNewBoard(Move move){
         Board aux=this.clone();
+        Edge edge=move.getEdge();
+
 //        if(edge.isHorizontal())
 //            hEdges[edge.iPosition()][edge.jPosition()]=1;
 //        else
 //            vEdges[edge.iPosition()][edge.jPosition()]=1;
-        aux.makeMove(move);
+        aux.fakeMove(move);
         return aux;
     }
     

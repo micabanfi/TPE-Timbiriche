@@ -45,10 +45,11 @@ public class  pcPlayer implements Player{
     //llama en algun momento a makeMove de Board
     //aca va la IA
     public Edge play(Object... arguments){
+        running=true;
         Board board= (Board) arguments[0];
         if(winCutoff==-1)
             winCutoff= (int) Math.pow(board.getN()-1,2);
-        Board aux=board.clone();
+//        Board aux=board.clone();
         Boolean model= (Boolean) arguments[1];
         int depth= (int) arguments[2];
         Edge bestMove=null;
@@ -60,7 +61,7 @@ public class  pcPlayer implements Player{
         //hay que ver como cortar aca
         if(availableMoves!=null) {
             for (Edge e : availableMoves) {
-                Node child = new Node(aux, this.playerNumber);
+                Node child = new Node(board.getNewBoard(new Move(e,this)), this.playerNumber);
 //                if(model)//time
 //                    limit=param/availableMoves.size();
 //                else
@@ -155,7 +156,7 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
-
+                state.getBoard().printBoard();
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,oponent)),this.playerNumber);
 
                 alpha = Math.max(alpha, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
@@ -169,6 +170,7 @@ public class  pcPlayer implements Player{
         } else {
 
             for(Edge e:availableMoves){
+                state.getBoard().printBoard();
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber);
 
                 beta = Math.min(beta, search(child, depth - 1, alpha, beta));//, startTime, timeLimit));
