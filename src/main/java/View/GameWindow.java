@@ -47,6 +47,7 @@ public class GameWindow extends JFrame {
 	}
 	
 	public void setTurnText(int turn) {
+		boardPanel.setTurn(turn);
 		scorePanel.setTurnText(turn);
 	}
 	

@@ -12,6 +12,7 @@ import Model.Edge;
 public class BoardPanel extends JPanel {
 	private static int n;
 	private static int ai;
+	private static int turn;
 	private static LinkedList<Line> lines = new LinkedList<>();
 	private LinkedList<Node> nodes = new LinkedList<>();
 	private static Node nodeSelected1;
@@ -221,14 +222,19 @@ public class BoardPanel extends JPanel {
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent e) {			
-			if(nodeSelected1 == null) {
-				nodeSelected1 = this;
-			} else {
-				nodeSelected2 = this;
-				bp.checkNodesSelected();
+		public void mouseClicked(MouseEvent e) {
+			if(BoardPanel.ai == 1 || BoardPanel.ai == 2) {
+				if(BoardPanel.turn == 1) {
+					if(nodeSelected1 == null) {
+						nodeSelected1 = this;
+					} else {
+						nodeSelected2 = this;
+						bp.checkNodesSelected();
+					}
+					repaint();
+				}
 			}
-			repaint();
+			return;
 		}
 
 		@Override
@@ -243,6 +249,10 @@ public class BoardPanel extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent e) {}
 		
+	}
+	
+	public void setTurn(int turn) {
+		BoardPanel.turn = turn;
 	}
 
 }

@@ -11,8 +11,9 @@ public class ScorePanel extends JPanel {
 	JPanel scores;
 	JLabel scoreP1;
 	JLabel scoreP2;
-	JPanel undoPanel;
+	JPanel btnPanel;
 	JButton undoBtn;
+	JButton dotBtn;
 	int ai;
 	String player1;
 	String player2;
@@ -46,15 +47,21 @@ public class ScorePanel extends JPanel {
 		scores.add(scoreP2);
 		add(scores, BorderLayout.CENTER);
 		
+		btnPanel = new JPanel();
 		if(ai != 3) {
-			undoPanel = new JPanel();
 			undoBtn = new JButton("Undo");
 			undoBtn.setFocusPainted(false);
-			UndoHandler handler = new UndoHandler();
-			undoBtn.addActionListener(handler);
-			undoPanel.add(undoBtn);
-			add(undoPanel, BorderLayout.SOUTH);
+			UndoHandler undoHandler = new UndoHandler();
+			undoBtn.addActionListener(undoHandler);
+			btnPanel.add(undoBtn, BorderLayout.LINE_START);
 		}
+		dotBtn = new JButton("Dot");
+		dotBtn.setFocusPainted(false);
+		DotHandler dotHandler = new DotHandler();
+		dotBtn.addActionListener(dotHandler);
+		btnPanel.add(dotBtn, BorderLayout.LINE_END);
+		add(btnPanel, BorderLayout.SOUTH);
+		
 	}
 
 	public void setTurnText(int turn) {
@@ -99,6 +106,11 @@ public class ScorePanel extends JPanel {
 		return;
 	}
 	
+	public void removeUndoBtn() {
+		btnPanel.remove(undoBtn);
+		return;
+	}
+	
 	private class UndoHandler implements ActionListener {
 
 		@Override
@@ -108,9 +120,13 @@ public class ScorePanel extends JPanel {
 		
 	}
 	
-	public void removeUndoBtn() {
-		undoPanel.remove(undoBtn);
-		return;
+	private class DotHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+		}
+		
 	}
 	
 }
