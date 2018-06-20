@@ -187,6 +187,20 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
+                if(eAnt.isHorizontal()){
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
+                }
+                else{
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+" ");
+                }
+                if(e.isHorizontal()){
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")H D:"+depth+"\";");
+                }
+                else {
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")V D:"+depth+"\";");
+                }
 
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
@@ -200,6 +214,25 @@ public class  pcPlayer implements Player{
 
         } else {
             for(Edge e:availableMoves){
+                if(eAnt.isHorizontal()){
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
+
+
+                }
+                else{
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+" ");
+
+
+                }
+                if(e.isHorizontal()){
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")H D:"+depth+"\";");
+
+                }
+                else {
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")V D:"+depth+"\";");
+                }
 
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber==1?2:1);
 
@@ -231,7 +264,6 @@ public class  pcPlayer implements Player{
             for(Edge e:availableMoves){
                 //state.getBoard().printBoard();
                 System.out.println("MAX");
-
                 if(eAnt.isHorizontal()){
                     int aux=depth+1;
                     dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
