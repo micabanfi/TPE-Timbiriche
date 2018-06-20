@@ -6,7 +6,6 @@ public class humanPlayer implements Player{
     private boolean turn;
     private Player opponent;
 
-
     public humanPlayer(int playerNumber)
     {
         this.score=0;

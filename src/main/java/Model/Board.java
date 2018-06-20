@@ -280,12 +280,6 @@ public class Board {
 
     public Board getNewBoard(Move move){
         Board aux=this.clone();
-        Edge edge=move.getEdge();
-
-//        if(edge.isHorizontal())
-//            hEdges[edge.iPosition()][edge.jPosition()]=1;
-//        else
-//            vEdges[edge.iPosition()][edge.jPosition()]=1;
         aux.fakeMove(move);
         return aux;
     }

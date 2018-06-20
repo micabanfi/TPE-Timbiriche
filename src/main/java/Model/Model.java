@@ -15,16 +15,15 @@ public class Model {
     private int turn;
     private Stack<Move> moves;
 
-    public void printModelInfo(){
-        System.out.println("Board N:"+board.getN());
-        System.out.println("Player1:"+p1.getPlayerNumber()+" Player2: "+p2.getPlayerNumber());
-        System.out.println("Role:"+role);
-        //System.out.println("Time:"+time);
-        System.out.println("Parametro time:"+param);
-        System.out.println("Prune:"+prune);
+    public void printModelInfo() {
+        System.out.println("Board N:"+ board.getN());
+        System.out.println("Player1: " + p1.getPlayerNumber() + " Player2: " + p2.getPlayerNumber());
+        System.out.println("Role: " + role);
+        System.out.println("Time: " + param);
+        System.out.println("Prune: " + prune);
     }
 
-    public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException{
+    public Model(int n,int role,String mode,int param,String prune) throws IllegalArgumentException {
         
         if(n < 3) {
         	throw new IllegalArgumentException("Size parameter must be greater than 2");
@@ -86,7 +85,6 @@ public class Model {
             throw new IllegalArgumentException();
         else
             this.param=param;
-
         
         this.moves=new Stack<>();
     }
