@@ -187,7 +187,6 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
-
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
                 alpha = Math.max(alpha, search(child, depth - 1, alpha, beta, startTime, dot, e));
@@ -200,7 +199,6 @@ public class  pcPlayer implements Player{
 
         } else {
             for(Edge e:availableMoves){
-
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber==1?2:1);
 
                 beta = Math.min(beta, search(child, depth - 1, alpha, beta, startTime, dot, e));
@@ -231,7 +229,6 @@ public class  pcPlayer implements Player{
             for(Edge e:availableMoves){
                 //state.getBoard().printBoard();
                 System.out.println("MAX");
-
                 if(eAnt.isHorizontal()){
                     int aux=depth+1;
                     dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");

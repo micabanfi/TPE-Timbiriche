@@ -33,11 +33,6 @@ public class Controller {
             }
             window.setScoreP1(gameModel.getScoreP1());
             window.setScoreP2(gameModel.getScoreP2());
-        }try {
-            System.out.println("ENTRO dot");
-            gameModel.dotCreation();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
         
         window.endGame(gameModel.over());

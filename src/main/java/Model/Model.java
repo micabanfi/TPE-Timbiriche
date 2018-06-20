@@ -183,7 +183,7 @@ public class Model {
         else{
             s=((pcPlayer) p1).getDot();
         }
-        PrintWriter writer = new PrintWriter("prog5-grapha.dot");
+        PrintWriter writer = new PrintWriter("tree.dot");
         writer.println(s);
         writer.close();
     }
