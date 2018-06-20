@@ -11,7 +11,7 @@ public class Node {
 
     public Node(Board board,int playerNumber){
         this.board=board;
-        this.playerNumber=playerNumber;// no se si hace falta
+        this.playerNumber=playerNumber;
         this.heuristic=board.getHeuristic(playerNumber);
         this.children=new LinkedList<>();
     }

@@ -15,21 +15,16 @@ public class Controller {
         	window.setTurnText(gameModel.getTurn());
         	// Game waits for Player to input move or undo move
             if(gameModel.isHumanTurn()){
-                System.out.println("Turno jugador "+gameModel.getTurn());
                 Edge edge = window.getEdge();
                 if(edge != null) {
                 	gameModel.addMove(edge);
                 } else {
                 	window.undoMoves(gameModel.undo());
                 }
-                System.out.println("Ya elijio humano");
             } else { // AI chooses a move
-                System.out.println("Turno Computadora "+ gameModel.getTurn());
                 Edge e = gameModel.play();
-                System.out.println("Computer EDGE:"+e.iPosition()+"-"+e.jPosition()+"-"+e.isHorizontal());
                 gameModel.addMove(e);
                 window.paintEdge(e);
-                System.out.println("Ya elijio pc");
             }
             if(window.generateDot()) {
         		try {
