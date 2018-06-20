@@ -29,6 +29,17 @@ public class Model {
         } else {
         	this.board=new Board(n);
         }
+
+        switch(prune) {
+            case "on":
+                this.prune=true;
+                break;
+            case "off":
+                this.prune=false;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
         
         switch(role) {
             case 0:
@@ -38,18 +49,19 @@ public class Model {
                 break;
             case 1:
                 this.p1=new humanPlayer(1);
-                this.p2=new pcPlayer(2,p1);
+                this.p2=new pcPlayer(2,p1,this.prune);
                 this.turn = 2;
                 break;
             case 2:
                 this.p1=new humanPlayer(1);
-                this.p2=new pcPlayer(2,p1);
+                this.p2=new pcPlayer(2,p1,this.prune);
                 this.turn = 1;
                 break;
             case 3:
-                this.p1=new pcPlayer(1);
-                this.p2=new pcPlayer(2);
-                //ALERT
+                this.p1=new pcPlayer(1, this.prune);
+                this.p2=new pcPlayer(2, this.prune);
+                this.p1.setOpponent(p2);
+                this.p2.setOpponent(p1);
                 this.turn = 1;
                 break;
             default:
@@ -72,17 +84,7 @@ public class Model {
             throw new IllegalArgumentException();
         else
             this.param=param;
-        
-        switch(prune) {
-            case "on":
-                this.prune=true;
-                break;
-            case "off":
-                this.prune=false;
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+
         
         this.moves=new Stack<>();
     }

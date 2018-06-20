@@ -10,23 +10,26 @@ public class  pcPlayer implements Player{
     private static Boolean stopSearch=false;
     private static Boolean running=true;
     private static int winCutoff=-1;
-    private Player oponent;
+    private Player opponent;
+    private Boolean prune;
     long timeLimitBranch=-1;
 
 
-    public pcPlayer(int playerNumber){
+    public pcPlayer(int playerNumber, Boolean prune){
         this.playerNumber=playerNumber;
-        this.oponent=null;
+        this.opponent=null;
+        this.prune=prune;
     }
 
-    public pcPlayer(int playerNumber,Player oponent){
+    public pcPlayer(int playerNumber,Player opponent,Boolean prune){
         this.playerNumber=playerNumber;
-        this.oponent=oponent;
+        this.opponent=opponent;
+        this.prune=prune;
     }
 
-
-    public void setOponent(Player oponent) {
-        this.oponent = oponent;
+    @Override
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
     }
 
     public int getPlayerNumber(){
@@ -45,7 +48,7 @@ public class  pcPlayer implements Player{
         return score;
     }
 
-
+    @Override
     public Edge play(Object... arguments){
         running=true;
         Board board= (Board) arguments[0];
@@ -168,7 +171,7 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
-                Node child=new Node(state.getBoard().getNewBoard(new Move(e,oponent)),this.playerNumber==1?2:1);
+                Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
                 alpha = Math.max(alpha, search(child, depth - 1, alpha, beta, startTime));
 
@@ -211,13 +214,16 @@ public class  pcPlayer implements Player{
             for(Edge e:availableMoves){
                 //state.getBoard().printBoard();
                 System.out.println("MAX");
-                Node child=new Node(state.getBoard().getNewBoard(new Move(e,oponent)),this.playerNumber==1?2:1);
+                Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
                 alpha = Math.max(alpha, search(child, depth - 1, alpha, beta));
 
-                if (beta <= alpha) {
-                    break;
+                if(prune){
+                    if (beta <= alpha) {
+                        break;
+                    }
                 }
+
             }
             return alpha;
 
@@ -231,9 +237,12 @@ public class  pcPlayer implements Player{
 
                 beta = Math.min(beta, search(child, depth - 1, alpha, beta));
 
-                if (beta <= alpha) {
-                    break;
+                if(prune){
+                    if (beta <= alpha) {
+                        break;
+                    }
                 }
+
             }
             return beta;
 
