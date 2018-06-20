@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Stack;
 
 public class Model {
@@ -173,6 +175,19 @@ public class Model {
         	}
     	}
     	return undoMoves;
+    }
+
+    public void dotCreation() throws FileNotFoundException {
+        StringBuffer s;
+        if(p2 instanceof pcPlayer){
+            s=((pcPlayer) p2).getDot();
+        }
+        else{
+            s=((pcPlayer) p1).getDot();
+        }
+        PrintWriter writer = new PrintWriter("prog5-grapha.dot");
+        writer.println(s);
+        writer.close();
     }
 
 }

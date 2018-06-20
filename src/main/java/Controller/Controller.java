@@ -3,6 +3,8 @@ package Controller;
 import Model.*;
 import View.GameWindow;
 
+import java.io.FileNotFoundException;
+
 public class Controller {
     public static void main(String[] args) {
         Model gameModel = new Model(Integer.parseInt(args[1]), Integer.parseInt(args[3]),args[5],
@@ -31,6 +33,11 @@ public class Controller {
             }
             window.setScoreP1(gameModel.getScoreP1());
             window.setScoreP2(gameModel.getScoreP2());
+        }try {
+            System.out.println("ENTRO dot");
+            gameModel.dotCreation();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         
         window.endGame(gameModel.over());

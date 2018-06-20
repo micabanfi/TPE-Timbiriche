@@ -1,7 +1,9 @@
 package Model;
 
 
-
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class  pcPlayer implements Player{
@@ -13,18 +15,21 @@ public class  pcPlayer implements Player{
     private Player opponent;
     private Boolean prune;
     long timeLimitBranch=-1;
+    private StringBuffer dot;
 
 
     public pcPlayer(int playerNumber, Boolean prune){
         this.playerNumber=playerNumber;
         this.opponent=null;
         this.prune=prune;
+        this.dot=new StringBuffer();
     }
 
     public pcPlayer(int playerNumber,Player opponent,Boolean prune){
         this.playerNumber=playerNumber;
         this.opponent=opponent;
         this.prune=prune;
+        this.dot=new StringBuffer();
     }
 
     @Override
@@ -50,6 +55,7 @@ public class  pcPlayer implements Player{
 
     @Override
     public Edge play(Object... arguments){
+        dot=new StringBuffer();
         running=true;
         Board board= (Board) arguments[0];
         if(winCutoff==-1)
@@ -62,6 +68,7 @@ public class  pcPlayer implements Player{
         Set<Edge> auxShuffle=new HashSet<>();
 
         List<Edge> availableMoves=board.getAvailableMoves();
+        dot.append("");
         if(availableMoves!=null) {
             timeLimitBranch=param*1000/availableMoves.size();
             for (Edge e : availableMoves) {
@@ -70,12 +77,21 @@ public class  pcPlayer implements Player{
 
                 Node child = new Node(board.getNewBoard(new Move(e,this)), this.playerNumber);
 
+                dot.append("start ->");
+                if(e.isHorizontal()){
+
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")H D:"+param+"\";");
+                }
+                else{
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")V D:"+param+"\";");
+                }
+
                 if(model){//time
-                    nodeHeuristic = ids(child, model, param);
+                    nodeHeuristic = ids(child, model, param, dot, e);
                 }
                 else {//depth
                     if (param > 1) {
-                        nodeHeuristic = ids(child, model, param - 1);
+                        nodeHeuristic = ids(child, model, param - 1, dot, e);
                     } else {
                         nodeHeuristic = child.getHeuristic(this.playerNumber);
                     }
@@ -99,7 +115,7 @@ public class  pcPlayer implements Player{
             }
         }
         //System.out.println("Computer EDGE:"+bestMove.iPosition()+"-"+bestMove.jPosition()+"-"+bestMove.isHorizontal());
-
+        System.out.println(dot);
         if(auxShuffle!=null){
             int size = auxShuffle.size();
             int item = new Random().nextInt(size);
@@ -114,7 +130,7 @@ public class  pcPlayer implements Player{
         return bestMove;
     }
 
-    private int ids(Node state,Boolean model,int param){
+    private int ids(Node state,Boolean model,int param, StringBuffer dot, Edge eAnt){
         int depth=1;
         long startTime=-1;
         if(model){//time
@@ -131,11 +147,11 @@ public class  pcPlayer implements Player{
                 if ((System.currentTimeMillis() - startTime) >= timeLimitBranch) {
                     break;
                 }
-                searchResult=search(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, startTime);
+                searchResult=search(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, startTime, dot, eAnt);
 
             }
             else{
-                searchResult=search(state, param, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                searchResult=search(state, param, Integer.MIN_VALUE, Integer.MAX_VALUE, dot, eAnt);
             }
 
 
@@ -156,7 +172,7 @@ public class  pcPlayer implements Player{
         return heuristic;
     }
 
-    private int search(Node state, int depth, int alpha, int beta, long startTime){
+    private int search(Node state, int depth, int alpha, int beta, long startTime, StringBuffer dot, Edge eAnt){
         List<Edge> availableMoves = state.getBoard().getAvailableMoves();
         int turn = state.getPlayerNumber()==1? 2:1;
         int score = state.getHeuristic(turn);
@@ -171,9 +187,10 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
+
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
-                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta, startTime));
+                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta, startTime, dot, e));
 
                 if (beta <= alpha) {
                     break;
@@ -186,7 +203,7 @@ public class  pcPlayer implements Player{
 
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber==1?2:1);
 
-                beta = Math.min(beta, search(child, depth - 1, alpha, beta, startTime));
+                beta = Math.min(beta, search(child, depth - 1, alpha, beta, startTime, dot, e));
 
                 if (beta <= alpha) {
                     break;
@@ -198,7 +215,7 @@ public class  pcPlayer implements Player{
 
     }
 
-    private int search(Node state, int depth, int alpha, int beta){
+    private int search(Node state, int depth, int alpha, int beta, StringBuffer dot, Edge eAnt){
 
         List<Edge> availableMoves = state.getBoard().getAvailableMoves();
         int turn = state.getPlayerNumber()==1? 2:1;
@@ -214,9 +231,30 @@ public class  pcPlayer implements Player{
             for(Edge e:availableMoves){
                 //state.getBoard().printBoard();
                 System.out.println("MAX");
+
+                if(eAnt.isHorizontal()){
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
+
+
+                }
+                else{
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+" ");
+
+
+                }
+                if(e.isHorizontal()){
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")H D:"+depth+"\";");
+
+                }
+                else {
+                    dot.append("\"("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")V D:"+depth+"\";");
+                }
+
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,opponent)),this.playerNumber==1?2:1);
 
-                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta));
+                alpha = Math.max(alpha, search(child, depth - 1, alpha, beta, dot, e));
 
                 if(prune){
                     if (beta <= alpha) {
@@ -233,9 +271,25 @@ public class  pcPlayer implements Player{
                 //state.getBoard().printBoard();
                 System.out.println("MIN");
 
+                if(eAnt.isHorizontal()){
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
+                }
+                else{
+                    int aux=depth+1;
+                    dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+"\" -> \"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")V D:"+aux+" ");
+                }
+                if(e.isHorizontal()){
+                    dot.append("("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")H D:"+depth+"\";");
+
+                }
+                else {
+                    dot.append("("+Integer.toString(e.iPosition())+","+Integer.toString(e.jPosition())+")V D:"+depth+"\";");
+                }
+
                 Node child=new Node(state.getBoard().getNewBoard(new Move(e,this)),this.playerNumber==1?2:1);
 
-                beta = Math.min(beta, search(child, depth - 1, alpha, beta));
+                beta = Math.min(beta, search(child, depth - 1, alpha, beta, dot, e));
 
                 if(prune){
                     if (beta <= alpha) {
@@ -248,5 +302,9 @@ public class  pcPlayer implements Player{
 
         }
 
+    }
+
+    public StringBuffer getDot() {
+        return dot;
     }
 }
