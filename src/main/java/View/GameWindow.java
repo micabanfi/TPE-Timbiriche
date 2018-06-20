@@ -10,21 +10,23 @@ public class GameWindow extends JFrame {
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
 	private int ai;
+	private String mode;
 
-	public GameWindow(int size, int ai) {
+	public GameWindow(int size, int ai, String mode) {
 		setTitle("Timbiriche");
 		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.ai = ai;
-
+		this.mode = mode;
+		
 		JLabel headerLabel = new JLabel("TIMBIRICHE", JLabel.CENTER);
 		headerLabel.setFont(new Font("Kai", Font.BOLD, 32));
 		
 		boardPanel = new BoardPanel(size, ai);
 		boardPanel.setPreferredSize(new Dimension(600, 600));
 
-		scorePanel = new ScorePanel(boardPanel, ai);
+		scorePanel = new ScorePanel(boardPanel, ai, mode);
 
 		getContentPane().add(headerLabel, BorderLayout.PAGE_START);
 		getContentPane().add(boardPanel, BorderLayout.CENTER);
@@ -64,6 +66,10 @@ public class GameWindow extends JFrame {
 		return;
 	}
 	
+	public boolean generateDot() {
+		return scorePanel.generateDot();
+	}
+	
 	public void endGame(int winner) {
 		scorePanel.setEndGameText(winner);
 		if(this.ai != 3) {
@@ -71,6 +77,13 @@ public class GameWindow extends JFrame {
 		}		
 		this.remove(boardPanel);
 		repaint();
+		return;
+	}
+
+	public void setGenerateDot(boolean b) {
+		if(!this.mode.equals("time")) {
+			scorePanel.setGenerateDot(b);
+		}
 		return;
 	}
 	

@@ -6,21 +6,24 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
-	BoardPanel bp;
-	JLabel turnLabel;
-	JPanel scores;
-	JLabel scoreP1;
-	JLabel scoreP2;
-	JPanel btnPanel;
-	JButton undoBtn;
-	JButton dotBtn;
-	int ai;
-	String player1;
-	String player2;
+	private BoardPanel bp;
+	private JLabel turnLabel;
+	private JPanel scores;
+	private JLabel scoreP1;
+	private JLabel scoreP2;
+	private JPanel btnPanel;
+	private JButton undoBtn;
+	private JButton dotBtn;
+	private int ai;
+	private String mode;
+	private String player1;
+	private String player2;
+	private Boolean generateDot = false;
 	
-	public ScorePanel(BoardPanel bp, int ai) {
+	public ScorePanel(BoardPanel bp, int ai, String mode) {
 		this.bp = bp;
 		this.ai = ai;
+		this.mode = mode;
 		setLayout(new BorderLayout(0, 10));
 		
 		turnLabel = new JLabel("", SwingConstants.CENTER);
@@ -55,11 +58,13 @@ public class ScorePanel extends JPanel {
 			undoBtn.addActionListener(undoHandler);
 			btnPanel.add(undoBtn, BorderLayout.LINE_START);
 		}
-		dotBtn = new JButton("Dot");
-		dotBtn.setFocusPainted(false);
-		DotHandler dotHandler = new DotHandler();
-		dotBtn.addActionListener(dotHandler);
-		btnPanel.add(dotBtn, BorderLayout.LINE_END);
+		if(!mode.equals("time")) {
+			dotBtn = new JButton("Dot");
+			dotBtn.setFocusPainted(false);
+			DotHandler dotHandler = new DotHandler();
+			dotBtn.addActionListener(dotHandler);
+			btnPanel.add(dotBtn, BorderLayout.LINE_END);
+		}
 		add(btnPanel, BorderLayout.SOUTH);
 		
 	}
@@ -121,8 +126,17 @@ public class ScorePanel extends JPanel {
 	private class DotHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			
+			generateDot = true;
 		}
+	}
+	
+	public boolean generateDot() {
+		return generateDot;
+	}
+
+	public void setGenerateDot(boolean b) {
+		generateDot = b;
+		return;
 	}
 	
 }
