@@ -6,6 +6,7 @@ public interface Player {
     void decScore();
     int getScore();
     public int getPlayerNumber();
-    /*void setTurn();
-    boolean getTurn();*/
+
+    void setOpponent(Player p1);
+
 }

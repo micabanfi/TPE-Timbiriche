@@ -4,6 +4,8 @@ public class humanPlayer implements Player{
     private int score;
     private int playerNumber;
     private boolean turn;
+    private Player opponent;
+
 
     public humanPlayer(int playerNumber)
     {
@@ -15,16 +17,6 @@ public class humanPlayer implements Player{
     public int getPlayerNumber(){
         return this.playerNumber;
     }
-
-   /* @Override
-    public void setTurn() {
-        turn=!turn;
-    }
-
-    @Override
-    public boolean getTurn() {
-        return turn;
-    }*/
 
     public void incScore() {
         this.score++;
@@ -38,8 +30,12 @@ public class humanPlayer implements Player{
         return score;
     }
 
-    //llama en algun momento a makeMove de Board
-    //recibe desde el controller que recibe desde el view lo que elige el jugador humano
+    @Override
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
+
+    @Override
     public Edge play(Object... arguments){
         return null;
     }
