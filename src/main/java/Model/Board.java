@@ -208,23 +208,20 @@ public class Board {
     }
 
     public void printBoard(){
-        System.out.println("************************************");
-        System.out.println("Print boxes:");
+
         for(int i = 0; i < n-1; i++) {
             for(int j = 0; j < n-1; j++) {
                 System.out.print(boxes[i][j] + " ");
             }
             System.out.print('\n');
         }
-        System.out.println("************************************");
-        System.out.println("Print horizontal:");
+
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n-1; j++) {
                 System.out.print(hEdges[i][j] + " ");
             }
             System.out.print('\n');
         }
-        System.out.println("Print vertical:");
         for(int i = 0; i < n-1; i++) {
             for(int j = 0; j < n; j++) {
                 System.out.print(vEdges[i][j] + " ");

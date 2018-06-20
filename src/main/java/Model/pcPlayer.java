@@ -114,8 +114,6 @@ public class  pcPlayer implements Player{
                 }
             }
         }
-        //System.out.println("Computer EDGE:"+bestMove.iPosition()+"-"+bestMove.jPosition()+"-"+bestMove.isHorizontal());
-        System.out.println(dot);
         if(auxShuffle!=null){
             int size = auxShuffle.size();
             int item = new Random().nextInt(size);
@@ -227,8 +225,6 @@ public class  pcPlayer implements Player{
 
         if (turn==this.playerNumber) {
             for(Edge e:availableMoves){
-                //state.getBoard().printBoard();
-                System.out.println("MAX");
                 if(eAnt.isHorizontal()){
                     int aux=depth+1;
                     dot.append("\"("+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+"\" -> \"(\""+Integer.toString(eAnt.iPosition())+","+Integer.toString(eAnt.jPosition())+")H D:"+aux+" ");
@@ -265,8 +261,6 @@ public class  pcPlayer implements Player{
         } else {
 
             for(Edge e:availableMoves){
-                //state.getBoard().printBoard();
-                System.out.println("MIN");
 
                 if(eAnt.isHorizontal()){
                     int aux=depth+1;
