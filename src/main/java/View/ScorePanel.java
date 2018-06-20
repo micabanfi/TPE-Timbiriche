@@ -58,7 +58,7 @@ public class ScorePanel extends JPanel {
 			undoBtn.addActionListener(undoHandler);
 			btnPanel.add(undoBtn, BorderLayout.LINE_START);
 		}
-		if(!mode.equals("time")) {
+		if(!mode.equals("time") && ai != 0) {
 			dotBtn = new JButton("Dot");
 			dotBtn.setFocusPainted(false);
 			DotHandler dotHandler = new DotHandler();

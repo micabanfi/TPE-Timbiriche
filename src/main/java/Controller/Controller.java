@@ -1,9 +1,10 @@
 package Controller;
 
-import Model.*;
-import View.GameWindow;
-
 import java.io.FileNotFoundException;
+
+import Model.Edge;
+import Model.Model;
+import View.GameWindow;
 
 public class Controller {
     public static void main(String[] args) {

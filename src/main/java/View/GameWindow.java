@@ -67,7 +67,11 @@ public class GameWindow extends JFrame {
 	}
 	
 	public boolean generateDot() {
-		return scorePanel.generateDot();
+		if(this.mode.equals("time") || this.ai == 0) {
+			return false;
+		} else {
+			return scorePanel.generateDot();
+		}
 	}
 	
 	public void endGame(int winner) {
@@ -81,9 +85,7 @@ public class GameWindow extends JFrame {
 	}
 
 	public void setGenerateDot(boolean b) {
-		if(!this.mode.equals("time")) {
-			scorePanel.setGenerateDot(b);
-		}
+		scorePanel.setGenerateDot(b);
 		return;
 	}
 	
